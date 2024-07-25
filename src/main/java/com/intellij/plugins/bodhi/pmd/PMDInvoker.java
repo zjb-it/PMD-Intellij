@@ -1,5 +1,6 @@
 package com.intellij.plugins.bodhi.pmd;
 
+import com.intellij.ide.SaveAndSyncHandler;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -155,7 +156,7 @@ public class PMDInvoker {
         }
 
         //Save all files
-        ApplicationManager.getApplication().saveAll();
+        SaveAndSyncHandler.getInstance().scheduleSave(new SaveAndSyncHandler.SaveTask(project));
 
         //Run PMD asynchronously
         ProgressManager.getInstance().run(new Task.Backgroundable(project, "Running PMD", true) {

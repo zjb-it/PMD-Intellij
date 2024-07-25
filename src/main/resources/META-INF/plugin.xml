@@ -12,7 +12,7 @@
   </project-components>
 
   <depends>com.intellij.modules.platform</depends>
-
+  <depends>com.intellij.java</depends>
   <actions>
     <!-- The Main menu item which includes predefined and custom rulesets -->
     <group id="PMDMenuGroup" text="Run PMD" popup="true"
@@ -40,5 +40,23 @@
     <externalAnnotator
             language="JAVA"
             implementationClass="com.intellij.plugins.bodhi.pmd.annotator.PMDExternalAnnotator"/>
+    <annotator language="JAVA" implementationClass="com.intellij.plugins.bodhi.pmd.annotator.SimpleAnnotator"/>
+
   </extensions>
+  <applicationListeners>
+    <listener
+            class="com.intellij.plugins.bodhi.pmd.listener.LuBanChangeListListener"
+            topic="com.intellij.openapi.vcs.changes.ChangeListListener"/>
+  </applicationListeners>
+
+
+  <projectListeners>
+    <listener
+            class="com.intellij.plugins.bodhi.pmd.listener.LuBanChangeListListener"
+            topic="com.intellij.openapi.vcs.changes.ChangeListListener"/>
+  </projectListeners>
+<!--  <applicationListeners>-->
+<!--    <listener class="com.ideaplugin.zjb.YmlInlineInlayFileListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"></listener>-->
+<!--  </applicationListeners>-->
+
 </idea-plugin>

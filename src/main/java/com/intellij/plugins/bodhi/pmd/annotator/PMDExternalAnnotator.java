@@ -3,6 +3,7 @@ package com.intellij.plugins.bodhi.pmd.annotator;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.ExternalAnnotator;
 import com.intellij.lang.annotation.HighlightSeverity;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.util.TextRange;
@@ -18,21 +19,19 @@ import net.sourceforge.pmd.lang.document.TextFileContent;
 import net.sourceforge.pmd.reporting.RuleViolation;
 import net.sourceforge.pmd.util.AssertionUtil;
 import net.sourceforge.pmd.util.StringUtil;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.StringReader;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Display PMD violations in the editor and in the problem view
+ *
+ * 收集 bug 信息
  */
 public class PMDExternalAnnotator extends ExternalAnnotator<FileInfo, PMDAnnotations> {
-    private static final Log log = LogFactory.getLog(PMDExternalAnnotator.class);
+    private static final Logger log = Logger.getInstance(PMDExternalAnnotator.class);
 
     @Override
     public FileInfo collectInformation(@NotNull PsiFile file, @NotNull Editor editor, boolean hasErrors) {

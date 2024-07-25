@@ -5,6 +5,7 @@ import com.intellij.CommonBundle;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vcs.CheckinProjectPanel;
+import com.intellij.openapi.vcs.changes.Change;
 import com.intellij.openapi.vcs.changes.CommitExecutor;
 import com.intellij.openapi.vcs.checkin.CheckinHandler;
 import com.intellij.openapi.vcs.ui.RefreshableOnComponent;
@@ -29,6 +30,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -98,6 +100,9 @@ public class PMDCheckinHandler extends CheckinHandler {
         }
 
         List<PMDRuleSetNode> ruleSetResultNodes = new ArrayList<>();
+//        plugin.getCustomRuleSetPaths().add();
+//        todo 自定义规则
+
         for (String ruleSetPath : plugin.getCustomRuleSetPaths()) {
             PMDRuleSetNode ruleSetResultNode = scanFiles(ruleSetPath, plugin);
             if (ruleSetResultNode != null) {
@@ -110,9 +115,15 @@ public class PMDCheckinHandler extends CheckinHandler {
     private PMDRuleSetNode scanFiles(String ruleSetPath, PMDProjectComponent plugin) {
         PMDRuleSetNode ruleSetResultNode = null;
         PMDResultCollector collector = new PMDResultCollector();
-        List<File> files = new ArrayList<>(checkinProjectPanel.getFiles());
+        Collection<Change> selectedChanges = checkinProjectPanel.getSelectedChanges();
 
+
+        List<File> files = new ArrayList<>(checkinProjectPanel.getFiles());
+        // 扫描结果
         List<PMDRuleSetEntryNode> ruleSetResultNodes = collector.runPMDAndGetResults(files, ruleSetPath, plugin);
+
+//todo 和selectedChanges匹配，匹配不上，即commit ，否则cancel
+
         if (!ruleSetResultNodes.isEmpty()) {
             ruleSetResultNode = createRuleSetNodeWithResults(ruleSetPath, ruleSetResultNodes);
         }

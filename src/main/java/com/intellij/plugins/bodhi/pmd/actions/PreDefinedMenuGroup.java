@@ -16,6 +16,8 @@ import java.util.Properties;
  * This ActionGroup defines the actions for pre defined rulesets that
  * comes with PMD. The actions are created dynamically.
  *
+ * 预定义的规则
+ *
  * @author bodhi
  * @version 1.0
  */

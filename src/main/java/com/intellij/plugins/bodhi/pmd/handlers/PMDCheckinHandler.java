@@ -2,13 +2,9 @@ package com.intellij.plugins.bodhi.pmd.handlers;
 
 import com.intellij.AbstractBundle;
 import com.intellij.CommonBundle;
-import com.intellij.openapi.application.ReadAction;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vcs.CheckinProjectPanel;
-import com.intellij.openapi.vcs.VcsException;
 import com.intellij.openapi.vcs.changes.Change;
 import com.intellij.openapi.vcs.changes.CommitExecutor;
 import com.intellij.openapi.vcs.checkin.CheckinHandler;
@@ -30,7 +26,6 @@ import com.intellij.plugins.bodhi.pmd.tree.*;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.PairConsumer;
 import com.intellij.util.ui.UIUtil;
 import net.sourceforge.pmd.util.CollectionUtil;
@@ -45,8 +40,8 @@ import javax.swing.*;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.io.File;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -77,10 +72,6 @@ public class PMDCheckinHandler extends CheckinHandler {
                 JPanel panel = new JPanel(new BorderLayout());
                 panel.add(checkBox);
                 return panel;
-            }
-
-            @Override
-            public void refresh() {
             }
 
             @Override
@@ -154,7 +145,7 @@ public class PMDCheckinHandler extends CheckinHandler {
             LineStatusTracker<?> lineStatusTracker = LineStatusTrackerManager.getInstance(currentProject).getLineStatusTracker(virtualFile);
             if (lineStatusTracker instanceof ChangelistsLocalLineStatusTracker changelistsLocalLineStatusTracker) {
                 List<LocalRange> ranges = changelistsLocalLineStatusTracker.getRanges();
-                for (LocalRange range : ranges) {
+                ranges.forEach(range->{
                     Set<Integer> collect = IntStream.range(range.getLine1(), range.getLine2() + 1)
                             .boxed()
                             .collect(Collectors.toSet());
@@ -165,7 +156,7 @@ public class PMDCheckinHandler extends CheckinHandler {
                         lines.addAll(collect);
                         changeLineMap.put(classPath, lines);
                     }
-                }
+                });
             }
 
         });

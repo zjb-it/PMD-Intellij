@@ -140,25 +140,26 @@ public class PMDCheckinHandler extends CheckinHandler {
 
     private List<PMDRuleSetEntryNode> checkCommitViolationNode(List<PMDRuleSetEntryNode> ruleSetResultNodes, Collection<Change> selectedChanges, Project currentProject) {
         Map<String, Set<Integer>> changeLineMap = new HashMap<>();
-        selectedChanges.stream().forEach(change -> {
+        selectedChanges.forEach(change -> {
             VirtualFile virtualFile = change.getVirtualFile();
-            LineStatusTracker<?> lineStatusTracker = LineStatusTrackerManager.getInstance(currentProject).getLineStatusTracker(virtualFile);
-            if (lineStatusTracker instanceof ChangelistsLocalLineStatusTracker changelistsLocalLineStatusTracker) {
-                List<LocalRange> ranges = changelistsLocalLineStatusTracker.getRanges();
-                ranges.forEach(range->{
-                    Set<Integer> collect = IntStream.range(range.getLine1(), range.getLine2() + 1)
-                            .boxed()
-                            .collect(Collectors.toSet());
-                    PsiFile psiFile = PsiManager.getInstance(currentProject).findFile(virtualFile);
-                    if (psiFile instanceof PsiJavaFile javaFile) {
-                        String classPath = javaFile.getPackageName() + "." + javaFile.getName().replace(".java", "");
-                        Set<Integer> lines = changeLineMap.getOrDefault(classPath, new HashSet<>());
-                        lines.addAll(collect);
-                        changeLineMap.put(classPath, lines);
-                    }
-                });
+            if (Objects.nonNull(virtualFile)) {
+                LineStatusTracker<?> lineStatusTracker = LineStatusTrackerManager.getInstance(currentProject).getLineStatusTracker(virtualFile);
+                if (lineStatusTracker instanceof ChangelistsLocalLineStatusTracker changelistsLocalLineStatusTracker) {
+                    List<LocalRange> ranges = changelistsLocalLineStatusTracker.getRanges();
+                    ranges.forEach(range->{
+                        Set<Integer> collect = IntStream.range(range.getLine1(), range.getLine2() + 1)
+                                .boxed()
+                                .collect(Collectors.toSet());
+                        PsiFile psiFile = PsiManager.getInstance(currentProject).findFile(virtualFile);
+                        if (psiFile instanceof PsiJavaFile javaFile) {
+                            String classPath = javaFile.getPackageName() + "." + javaFile.getName().replace(".java", "");
+                            Set<Integer> lines = changeLineMap.getOrDefault(classPath, new HashSet<>());
+                            lines.addAll(collect);
+                            changeLineMap.put(classPath, lines);
+                        }
+                    });
+                }
             }
-
         });
         List<PMDRuleSetEntryNode> result = new ArrayList<>();
         for (PMDRuleSetEntryNode node : ruleSetResultNodes) {

@@ -3,40 +3,40 @@
 <properties>
     <!--naming-->
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassShouldStartWithAbstractNamingRule.violation.msg">
-        <![CDATA[抽象类{0}命名应以Abstract或Base开头]]>
+        <![CDATA[抽象类 【{0}】 命名应以Abstract或Base开头]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ArrayNamingShouldHaveBracketRule.violation.msg">
-        <![CDATA[数组变量{0}中括号位置错误]]>
+        <![CDATA[数组变量 【{0}】 中括号位置错误]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.AvoidStartWithDollarAndUnderLineNamingRule.violation.msg">
-        <![CDATA[{0}命名不能以_或$开始]]>
+        <![CDATA[ 【{0}】 命名不能以_或$开始]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.BooleanPropertyShouldNotStartWithIsRule.violation.msg">
-        <![CDATA[布尔字段{0}不要加is前缀]]>
+        <![CDATA[布尔字段 【{0}】 不要加is前缀]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ClassNamingShouldBeCamelRule.violation.msg">
-        <![CDATA[{0}不符合UpperCamelCase命名风格]]>
+        <![CDATA[ 【{0}】 不符合UpperCamelCase命名风格]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ConstantFieldShouldBeUpperCaseRule.violation.msg">
-        <![CDATA[常量{0}命名应全部大写并以下划线分隔]]>
+        <![CDATA[常量 【{0}】 命名应全部大写并以下划线分隔]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ExceptionClassShouldEndWithExceptionRule.violation.msg">
-        <![CDATA[{0}命名应以Exception结尾]]>
+        <![CDATA[ 【{0}】 命名应以Exception结尾]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.LowerCamelCaseVariableNamingRule.violation.msg.method">
-        <![CDATA[方法名{0}不符合lowerCamelCase命名风格]]>
+        <![CDATA[方法名 【{0}】 不符合lowerCamelCase命名风格]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.LowerCamelCaseVariableNamingRule.violation.msg.variable">
-        <![CDATA[变量名{0}不符合lowerCamelCase命名风格]]>
+        <![CDATA[变量名 【{0}】 不符合lowerCamelCase命名风格]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.PackageNamingRule.violation.msg">
-        <![CDATA[包名{0}应全部为小写字母和数字组成]]>
+        <![CDATA[包名 【{0}】 应全部为小写字母和数字组成]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ServiceOrDaoClassShouldEndWithImplRule.violation.msg">
-        <![CDATA[类名{0}应以Impl结尾]]>
+        <![CDATA[类名 【{0}】 应以Impl结尾]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.TestClassShouldEndWithTestNamingRule.violation.msg">
-        <![CDATA[测试类{0}命名应以Test结尾]]>
+        <![CDATA[测试类 【{0}】 命名应以Test结尾]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.IbatisMethodQueryForListRule.violation.msg">
         <![CDATA[iBATIS自带的com.ibatis.sqlmap.client.SqlMapClient.queryForList(String statementName,int start,int size)不推荐使用]]>
@@ -49,7 +49,7 @@
     </entry>
 
     <entry key="java.exception.MethodReturnWrapperTypeRule.violation.msg">
-        <![CDATA[返回类型为基本数据类型{0}，return包装数据类型的对象{0}时，自动拆箱有可能产生NPE]]>
+        <![CDATA[返回类型为基本数据类型 【{0}】 ，return包装数据类型的对象 【{0}】 时，自动拆箱有可能产生NPE]]>
     </entry>
 
     <entry key="java.exception.MethodReturnWrapperTypeRule.rule.msg">
@@ -60,7 +60,7 @@
         <![CDATA[注解【Transactional】需要设置rollbackFor属性。]]>
     </entry>
     <entry key="java.exception.TransactionMustHaveRollbackRule.violation.msg">
-        <![CDATA[方法{0}需要在Transactional注解指定rollbackFor或者在方法中显式的rollback。]]>
+        <![CDATA[方法 【{0}】 需要在Transactional注解指定rollbackFor或者在方法中显式的rollback。]]>
     </entry>
     <entry key="java.exception.TransactionMustHaveRollbackRule.rule.msg">
         <![CDATA[事务场景中，抛出异常被catch后，如果需要回滚，一定要手动回滚事务。]]>
@@ -119,7 +119,7 @@
         <![CDATA[【Math.random()】应避免在多线程并发环境下使用。]]>
     </entry>
     <entry key="java.concurrent.AvoidConcurrentCompetitionRandomRule.violation.msg.random">
-        <![CDATA[不要在多线程并发环境下使用同一个Random对象{0}。]]>
+        <![CDATA[不要在多线程并发环境下使用同一个Random对象 【{0}】 。]]>
     </entry>
     <entry key="java.concurrent.AvoidConcurrentCompetitionRandomRule.rule.msg">
         <![CDATA[避免Random实例被多线程使用，虽然共享该实例是线程安全的，但会因竞争同一seed 导致的性能下降。说明：Random实例包括java.util.Random 的实例或者 Math.random()的方式。]]>
@@ -148,7 +148,7 @@
     </entry>
 
     <entry key="java.concurrent.ThreadLocalShouldRemoveRule.violation.msg">
-        <![CDATA[ThreadLocal字段{0}应该至少调用一次remove()方法。]]>
+        <![CDATA[ThreadLocal字段 【{0}】 应该至少调用一次remove()方法。]]>
     </entry>
     <entry key="java.concurrent.ThreadLocalShouldRemoveRule.rule.msg">
         <![CDATA[必须回收自定义的ThreadLocal变量，尤其在线程池场景下，线程经常会被复用，如果不清理自定义的 ThreadLocal变量，可能会影响后续业务逻辑和造成内存泄露等问题。尽量在代理中使用try-finally块进行回收。]]>
@@ -179,7 +179,7 @@
         <![CDATA[创建线程或线程池时请指定有意义的线程名称，方便出错时回溯。创建线程池的时候请使用带ThreadFactory的构造函数，并且提供自定义ThreadFactory实现或者使用第三方实现。]]>
     </entry>
     <entry key="java.concurrent.LockShouldWithTryFinallyRule.violation.msg">
-        <![CDATA[锁{0}必须紧跟try代码块，且unlock要放到finally第一行。]]>
+        <![CDATA[锁 【{0}】 必须紧跟try代码块，且unlock要放到finally第一行。]]>
     </entry>
     <entry key="java.concurrent.LockShouldWithTryFinallyRule.rule.msg">
         <![CDATA[在使用阻塞等待获取锁的方式中，必须在try代码块之外，并且在加锁方法与try代码块之间没有任何可能抛出异常的方法调用，避免加锁成功后，在finally中无法解锁。
@@ -235,7 +235,7 @@
 
     <!-- set -->
     <entry key="java.set.ClassCastExceptionWithSubListToArrayListRule.violation.msg">
-        <![CDATA[{0}的结果不可强转成ArrayList]]>
+        <![CDATA[ 【{0}】 的结果不可强转成ArrayList]]>
     </entry>
     <entry key="java.set.ClassCastExceptionWithSubListToArrayListRule.rule.msg">
         <![CDATA[ ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常。 ]]>
@@ -244,13 +244,13 @@
         <![CDATA[ 说明:禁止强转，如果需要用到集合特性方法，请新建一个集合，然后置入sublist,new 集合(sublist结果)。 ]]>
     </entry>
     <entry key="java.set.ClassCastExceptionWithToArrayRule.violation.msg">
-        <![CDATA[{0}应使用大小一致类型一致的数组参数]]>
+        <![CDATA[ 【{0}】 应使用大小一致类型一致的数组参数]]>
     </entry>
     <entry key="java.set.ClassCastExceptionWithToArrayRule.rule.msg">
         <![CDATA[使用集合转数组的方法，必须使用集合的toArray(T[] array)，传入的是类型完全一样的数组，大小就是list.size()]]>
     </entry>
     <entry key="java.set.CollectionInitShouldAssignCapacityRule.violation.msg">
-        <![CDATA[{0}初始化时，尽量指定初始值大小]]>
+        <![CDATA[ 【{0}】 初始化时，尽量指定初始值大小]]>
     </entry>
     <entry key="java.set.CollectionInitShouldAssignCapacityRule.rule.msg">
         <![CDATA[集合初始化时，指定集合初始值大小。]]>
@@ -259,19 +259,19 @@
         <![CDATA[说明：HashMap使用如下构造方法进行初始化，如果暂时无法确定集合大小，那么指定默认值（16）即可。]]>
     </entry>
     <entry key="java.set.ConcurrentExceptionWithModifyOriginSubListRule.violation.msg">
-        <![CDATA[{0}在这里可能会导致ConcurrentModificationException]]>
+        <![CDATA[ 【{0}】 在这里可能会导致ConcurrentModificationException]]>
     </entry>
     <entry key="java.set.ConcurrentExceptionWithModifyOriginSubListRule.rule.msg">
         <![CDATA[在subList场景中，高度注意对原列表的修改，会导致子列表的遍历、增加、删除均产生ConcurrentModificationException异常。]]>
     </entry>
     <entry key="java.set.DontModifyInForeachCircleRule.violation.msg">
-        <![CDATA[ 不要在遍历中使用{0}]]>
+        <![CDATA[ 不要在遍历中使用 【{0}】 ]]>
     </entry>
     <entry key="java.set.DontModifyInForeachCircleRule.rule.msg">
         <![CDATA[ 不要在foreach循环里进行元素的remove/add操作，remove元素请使用Iterator方式。]]>
     </entry>
     <entry key="java.set.UnsupportedExceptionWithModifyAsListRule.violation.msg">
-        <![CDATA[ 这里使用{0}可能会导致UnsupportedOperationException ]]>
+        <![CDATA[ 这里使用 【{0}】 可能会导致UnsupportedOperationException ]]>
     </entry>
     <entry key="java.set.UnsupportedExceptionWithModifyAsListRule.rule.msg">
         <![CDATA[ 使用工具类Arrays.asList()把数组转换成集合时，不能使用其修改集合相关的方法，它的add/remove/clear方法会抛出UnsupportedOperationException异常。 ]]>
@@ -287,13 +287,13 @@
     </entry>
     <!-- constant -->
     <entry key="java.constant.UndefineMagicConstantRule.violation.msg">
-        <![CDATA[ 魔法值{0}]]>
+        <![CDATA[ 魔法值 【{0}】 ]]>
     </entry>
     <entry key="java.constant.UndefineMagicConstantRule.rule.msg">
         <![CDATA[ 不允许任何魔法值（即未经定义的常量）直接出现在代码中。]]>
     </entry>
     <entry key="java.constant.UpperEllRule.violation.msg">
-        <![CDATA[{0}应使用大写L ]]>
+        <![CDATA[ 【{0}】 应使用大写L ]]>
     </entry>
     <entry key="java.constant.UpperEllRule.rule.msg">
         <![CDATA[ long或者Long初始赋值时，必须使用大写的L，不能是小写的l，小写容易跟数字1混淆，造成误解。]]>
@@ -302,7 +302,7 @@
 
     <!-- oop -->
     <entry key="java.oop.EqualsAvoidNullRule.violation.msg">
-        <![CDATA[{0}应该作为equals的参数，而不是调用方]]>
+        <![CDATA[ 【{0}】 应该作为equals的参数，而不是调用方]]>
     </entry>
     <entry key="java.oop.EqualsAvoidNullRule.rule.msg">
         <![CDATA[Object的equals方法容易抛空指针异常，应使用常量或确定有值的对象来调用equals。]]>
@@ -319,7 +319,7 @@
     </entry>
 
     <entry key="java.oop.PojoMustUsePrimitiveFieldRule.violation.msg">
-        <![CDATA[字段{0}应使用包装类型]]>
+        <![CDATA[字段 【{0}】 应使用包装类型]]>
     </entry>
     <entry key="java.oop.PojoMustUsePrimitiveFieldRule.rule.msg">
         <![CDATA[
@@ -334,14 +334,14 @@
     </entry>
 
     <entry key="java.oop.PojoNoDefaultValueRule.violation.msg">
-        <![CDATA[字段{0}不应该加默认值]]>
+        <![CDATA[字段 【{0}】 不应该加默认值]]>
     </entry>
     <entry key="java.oop.PojoNoDefaultValueRule.rule.msg">
         <![CDATA[定义DO/DTO/VO等POJO类时，不要加任何属性默认值。]]>
     </entry>
 
     <entry key="java.oop.PojoMustOverrideToStringRule.violation.msg.notostring">
-        <![CDATA[{0}没有写toString方法]]>
+        <![CDATA[ 【{0}】 没有写toString方法]]>
     </entry>
     <entry key="java.oop.PojoMustOverrideToStringRule.violation.msg.usesuper">
         <![CDATA[注意在前面加一下super.toString]]>
@@ -386,7 +386,7 @@
         ]]>
     </entry>
     <entry key="java.comment.CommentsMustBeJavadocFormatRule.violation.msg.class">
-        <![CDATA[类{0}必须使用javadoc形式的注释]]>
+        <![CDATA[类 【{0}】 必须使用javadoc形式的注释]]>
     </entry>
     <entry key="java.comment.CommentsMustBeJavadocFormatRule.violation.msg.constructor.default">
         <![CDATA[构造方法【%s()】必须使用javadoc形式的注释]]>
@@ -395,13 +395,13 @@
         <![CDATA[构造方法【%s(%s)】必须使用javadoc形式的注释]]>
     </entry>
     <entry key="java.comment.CommentsMustBeJavadocFormatRule.violation.msg.method">
-        <![CDATA[方法{0}必须使用javadoc形式的注释]]>
+        <![CDATA[方法 【{0}】 必须使用javadoc形式的注释]]>
     </entry>
     <entry key="java.comment.CommentsMustBeJavadocFormatRule.violation.msg.field">
-        <![CDATA[字段{0}必须使用javadoc形式的注释]]>
+        <![CDATA[字段 【{0}】 必须使用javadoc形式的注释]]>
     </entry>
     <entry key="java.comment.CommentsMustBeJavadocFormatRule.violation.msg.enum">
-        <![CDATA[枚举{0}必须使用javadoc形式的注释]]>
+        <![CDATA[枚举 【{0}】 必须使用javadoc形式的注释]]>
     </entry>
 
     <entry key="java.comment.AbstractMethodOrInterfaceMethodMustUseJavadocRule.rule.msg">
@@ -413,22 +413,22 @@
         ]]>
     </entry>
     <entry key="java.comment.AbstractMethodOrInterfaceMethodMustUseJavadocRule.violation.msg.abstract">
-        <![CDATA[抽象方法{0}必须使用javadoc注释]]>
+        <![CDATA[抽象方法 【{0}】 必须使用javadoc注释]]>
     </entry>
     <entry key="java.comment.AbstractMethodOrInterfaceMethodMustUseJavadocRule.violation.msg.interface">
-        <![CDATA[接口方法{0}必须使用javadoc注释]]>
+        <![CDATA[接口方法 【{0}】 必须使用javadoc注释]]>
     </entry>
     <entry key="java.comment.AbstractMethodOrInterfaceMethodMustUseJavadocRule.violation.msg.desc">
-        <![CDATA[请详细描述方法{0}的功能与意图]]>
+        <![CDATA[请详细描述方法 【{0}】 的功能与意图]]>
     </entry>
     <entry key="java.comment.AbstractMethodOrInterfaceMethodMustUseJavadocRule.violation.msg.parameter">
-        <![CDATA[方法{0}的参数{0}缺少javadoc注释]]>
+        <![CDATA[方法 【{0}】 的参数 【{0}】 缺少javadoc注释]]>
     </entry>
     <entry key="java.comment.AbstractMethodOrInterfaceMethodMustUseJavadocRule.violation.msg.return">
-        <![CDATA[方法{0}的返回值缺少javadoc注释]]>
+        <![CDATA[方法 【{0}】 的返回值缺少javadoc注释]]>
     </entry>
     <entry key="java.comment.AbstractMethodOrInterfaceMethodMustUseJavadocRule.violation.msg.exception">
-        <![CDATA[方法{0}的异常{0}缺少javadoc注释]]>
+        <![CDATA[方法 【{0}】 的异常 【{0}】 缺少javadoc注释]]>
     </entry>
 
 
@@ -448,17 +448,17 @@
         ]]>
     </entry>
     <entry key="java.comment.ClassMustHaveAuthorRule.violation.msg.comment">
-        <![CDATA[{0}缺少包含@author的注释信息]]>
+        <![CDATA[ 【{0}】 缺少包含@author的注释信息]]>
     </entry>
     <entry key="java.comment.ClassMustHaveAuthorRule.violation.msg.author">
-        <![CDATA[{0}注释缺少@author信息]]>
+        <![CDATA[ 【{0}】 注释缺少@author信息]]>
     </entry>
 
     <entry key="java.comment.EnumConstantsMustHaveCommentRule.rule.msg">
         <![CDATA[所有的枚举类型字段必须要有注释，说明每个数据项的用途。]]>
     </entry>
     <entry key="java.comment.EnumConstantsMustHaveCommentRule.violation.msg">
-        <![CDATA[枚举{0}的字段缺少注释信息]]>
+        <![CDATA[枚举 【{0}】 的字段缺少注释信息]]>
     </entry>
 
     <entry key="java.comment.RemoveCommentedCodeRule.rule.msg">
@@ -480,7 +480,7 @@
         ]]>
     </entry>
     <entry key="java.other.AvoidPatternCompileInMethodRule.violation.msg">
-        <![CDATA[变量{0}应定义为常量或者字段]]>
+        <![CDATA[变量 【{0}】 应定义为常量或者字段]]>
     </entry>
 
     <entry key="java.other.AvoidApacheBeanUtilsCopyRule.rule.msg">
@@ -519,7 +519,7 @@
     </entry>
 
     <entry key="java.other.MethodTooLongRule.violation.msg">
-        <![CDATA[方法{0}的总行数不要超过80行。]]>
+        <![CDATA[方法 【{0}】 的总行数不要超过80行。]]>
     </entry>
 
     <entry key="java.other.UseRightCaseForDateFormatRule.rule.msg">
@@ -539,7 +539,7 @@
         ]]>
     </entry>
     <entry key="vm.other.UseQuietReferenceNotationRule.violation.msg">
-        <![CDATA[变量{0}使用的时候应在$后加感叹号]]>
+        <![CDATA[变量 【{0}】 使用的时候应在$后加感叹号]]>
     </entry>
 
     <entry key="java.other.AvoidDoubleOrFloatEqualCompareRule.rule.msg">

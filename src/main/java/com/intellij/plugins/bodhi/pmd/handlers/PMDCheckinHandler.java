@@ -29,6 +29,7 @@ import com.intellij.psi.PsiManager;
 import com.intellij.util.PairConsumer;
 import com.intellij.util.ui.UIUtil;
 import net.sourceforge.pmd.util.CollectionUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jetbrains.annotations.NonNls;
@@ -146,18 +147,20 @@ public class PMDCheckinHandler extends CheckinHandler {
                 LineStatusTracker<?> lineStatusTracker = LineStatusTrackerManager.getInstance(currentProject).getLineStatusTracker(virtualFile);
                 if (lineStatusTracker instanceof ChangelistsLocalLineStatusTracker changelistsLocalLineStatusTracker) {
                     List<LocalRange> ranges = changelistsLocalLineStatusTracker.getRanges();
-                    ranges.forEach(range->{
-                        Set<Integer> collect = IntStream.range(range.getLine1(), range.getLine2() + 1)
-                                .boxed()
-                                .collect(Collectors.toSet());
-                        PsiFile psiFile = PsiManager.getInstance(currentProject).findFile(virtualFile);
-                        if (psiFile instanceof PsiJavaFile javaFile) {
-                            String classPath = javaFile.getPackageName() + "." + javaFile.getName().replace(".java", "");
-                            Set<Integer> lines = changeLineMap.getOrDefault(classPath, new HashSet<>());
-                            lines.addAll(collect);
-                            changeLineMap.put(classPath, lines);
-                        }
-                    });
+                    if (CollectionUtils.isNotEmpty(ranges)) {
+                        ranges.forEach(range->{
+                            Set<Integer> collect = IntStream.range(range.getLine1(), range.getLine2() + 1)
+                                    .boxed()
+                                    .collect(Collectors.toSet());
+                            PsiFile psiFile = PsiManager.getInstance(currentProject).findFile(virtualFile);
+                            if (psiFile instanceof PsiJavaFile javaFile) {
+                                String classPath = javaFile.getPackageName() + "." + javaFile.getName().replace(".java", "");
+                                Set<Integer> lines = changeLineMap.getOrDefault(classPath, new HashSet<>());
+                                lines.addAll(collect);
+                                changeLineMap.put(classPath, lines);
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -181,7 +184,7 @@ public class PMDCheckinHandler extends CheckinHandler {
                 }
 
             }
-            oldNodes.forEach(oldNode->node.remove(oldNode));
+            oldNodes.forEach(node::remove);
             if (node.getChildCount() > 0) {
                 result.add(node);
             }

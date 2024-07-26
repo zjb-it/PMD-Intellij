@@ -2,13 +2,22 @@ package com.intellij.plugins.bodhi.pmd.handlers;
 
 import com.intellij.AbstractBundle;
 import com.intellij.CommonBundle;
+import com.intellij.openapi.application.ReadAction;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vcs.CheckinProjectPanel;
+import com.intellij.openapi.vcs.VcsException;
 import com.intellij.openapi.vcs.changes.Change;
 import com.intellij.openapi.vcs.changes.CommitExecutor;
 import com.intellij.openapi.vcs.checkin.CheckinHandler;
+import com.intellij.openapi.vcs.ex.ChangelistsLocalLineStatusTracker;
+import com.intellij.openapi.vcs.ex.LineStatusTracker;
+import com.intellij.openapi.vcs.ex.LocalRange;
+import com.intellij.openapi.vcs.impl.LineStatusTrackerManager;
 import com.intellij.openapi.vcs.ui.RefreshableOnComponent;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.plugins.bodhi.pmd.PMDInvoker;
@@ -16,9 +25,15 @@ import com.intellij.plugins.bodhi.pmd.PMDProjectComponent;
 import com.intellij.plugins.bodhi.pmd.PMDResultPanel;
 import com.intellij.plugins.bodhi.pmd.PMDUtil;
 import com.intellij.plugins.bodhi.pmd.core.PMDResultCollector;
+import com.intellij.plugins.bodhi.pmd.core.PMDViolation;
 import com.intellij.plugins.bodhi.pmd.tree.*;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.PairConsumer;
 import com.intellij.util.ui.UIUtil;
+import net.sourceforge.pmd.util.CollectionUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jetbrains.annotations.NonNls;
@@ -27,12 +42,13 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.PropertyKey;
 
 import javax.swing.*;
+import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class PMDCheckinHandler extends CheckinHandler {
 
@@ -116,18 +132,69 @@ public class PMDCheckinHandler extends CheckinHandler {
         PMDRuleSetNode ruleSetResultNode = null;
         PMDResultCollector collector = new PMDResultCollector();
         Collection<Change> selectedChanges = checkinProjectPanel.getSelectedChanges();
-
-
         List<File> files = new ArrayList<>(checkinProjectPanel.getFiles());
         // 扫描结果
         List<PMDRuleSetEntryNode> ruleSetResultNodes = collector.runPMDAndGetResults(files, ruleSetPath, plugin);
 
-//todo 和selectedChanges匹配，匹配不上，即commit ，否则cancel
-
+// 和selectedChanges匹配，匹配不上，即commit ，否则cancel
+//        ((PMDViolationNode)ruleSetResultNodes.get(0).getFirstChild()).getPmdViolation().getEndLine()
         if (!ruleSetResultNodes.isEmpty()) {
-            ruleSetResultNode = createRuleSetNodeWithResults(ruleSetPath, ruleSetResultNodes);
+            ruleSetResultNodes = checkCommitViolationNode(ruleSetResultNodes, selectedChanges, plugin.getCurrentProject());
+            if (!ruleSetResultNodes.isEmpty()) {
+                ruleSetResultNode = createRuleSetNodeWithResults(ruleSetPath, ruleSetResultNodes);
+            }
         }
         return ruleSetResultNode;
+    }
+
+    private List<PMDRuleSetEntryNode> checkCommitViolationNode(List<PMDRuleSetEntryNode> ruleSetResultNodes, Collection<Change> selectedChanges, Project currentProject) {
+        Map<String, Set<Integer>> changeLineMap = new HashMap<>();
+        selectedChanges.stream().forEach(change -> {
+            VirtualFile virtualFile = change.getVirtualFile();
+            LineStatusTracker<?> lineStatusTracker = LineStatusTrackerManager.getInstance(currentProject).getLineStatusTracker(virtualFile);
+            if (lineStatusTracker instanceof ChangelistsLocalLineStatusTracker changelistsLocalLineStatusTracker) {
+                List<LocalRange> ranges = changelistsLocalLineStatusTracker.getRanges();
+                for (LocalRange range : ranges) {
+                    Set<Integer> collect = IntStream.range(range.getLine1(), range.getLine2() + 1)
+                            .boxed()
+                            .collect(Collectors.toSet());
+                    PsiFile psiFile = PsiManager.getInstance(currentProject).findFile(virtualFile);
+                    if (psiFile instanceof PsiJavaFile javaFile) {
+                        String classPath = javaFile.getPackageName() + "." + javaFile.getName().replace(".java", "");
+                        Set<Integer> lines = changeLineMap.getOrDefault(classPath, new HashSet<>());
+                        lines.addAll(collect);
+                        changeLineMap.put(classPath, lines);
+                    }
+                }
+            }
+
+        });
+        List<PMDRuleSetEntryNode> result = new ArrayList<>();
+        for (PMDRuleSetEntryNode node : ruleSetResultNodes) {
+            int childCount = node.getChildCount();
+            List<Integer> oldNodes = new ArrayList<>();
+            for (int i = 0; i < childCount; i++) {
+                TreeNode child = node.getChildAt(i);
+                if (child instanceof PMDViolationNode violationNode) {
+                    PMDViolation pmdViolation = violationNode.getPmdViolation();
+                    Set<Integer> collect = IntStream.range(pmdViolation.getBeginLine(), pmdViolation.getEndLine() + 1)
+                            .boxed()
+                            .collect(Collectors.toSet());
+                    String classPath = pmdViolation.getPackageName() + "." + pmdViolation.getClassName();
+                    Set<Integer> changeLines = changeLineMap.getOrDefault(classPath, Set.of());
+//                    忽略以前的violation
+                    if (CollectionUtil.intersect(changeLines, collect).isEmpty()) {
+                        oldNodes.add(i);
+                    }
+                }
+
+            }
+            oldNodes.forEach(oldNode->node.remove(oldNode));
+            if (node.getChildCount() > 0) {
+                result.add(node);
+            }
+        }
+        return result;
     }
 
     private PMDRuleSetNode createRuleSetNodeWithResults(String ruleSetPath, List<PMDRuleSetEntryNode> ruleResultNodes) {

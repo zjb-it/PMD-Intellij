@@ -11,6 +11,7 @@ import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.fileEditor.OpenFileDescriptor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
@@ -156,7 +157,7 @@ public class PMDResultPanel extends JPanel {
                 } else if (e.getActionCommand().equals(PMDPopupMenu.DETAILS)) {
                     // show rule details documentation in browser
                     String url = popupMenu.getDetailsUrl();
-                    if (!url.isEmpty()) {
+                    if (StringUtil.isNotEmpty(url)) {
                         BrowserUtil.browse(url);
                     }
                 }

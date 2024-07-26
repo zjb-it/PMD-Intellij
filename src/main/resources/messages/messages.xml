@@ -2,6 +2,23 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <!--naming-->
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ClassNamingShouldBeCamelRule.violation.msg">
+        <![CDATA[ 【{0} {1} 】 不符合UpperCamelCase命名风格，正则要求：{2}]]>
+    </entry>
+
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNameRule.violation.msg">
+        <![CDATA[
+            【{0}】不符合规则
+        ]]>
+    </entry>
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.MethodNamingShouldBeCamelRule.violation.msg">
+        <![CDATA[
+            【{0} {1} 】不符合规则，正则要求：{2}]
+        ]]>
+    </entry>
+
+
+
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassShouldStartWithAbstractNamingRule.violation.msg">
         <![CDATA[抽象类 【{0}】 命名应以Abstract或Base开头]]>
     </entry>
@@ -14,9 +31,7 @@
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.BooleanPropertyShouldNotStartWithIsRule.violation.msg">
         <![CDATA[布尔字段 【{0}】 不要加is前缀]]>
     </entry>
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ClassNamingShouldBeCamelRule.violation.msg">
-        <![CDATA[ 【{0}】 不符合UpperCamelCase命名风格]]>
-    </entry>
+
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ConstantFieldShouldBeUpperCaseRule.violation.msg">
         <![CDATA[常量 【{0}】 命名应全部大写并以下划线分隔]]>
     </entry>

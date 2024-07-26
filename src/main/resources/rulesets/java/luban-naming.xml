@@ -5,7 +5,6 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
     <description>LuBanJavaNaming</description>
 
-
     <rule name="ClassNamingShouldBeCamelRule"
           language="java"
           since="1.6"
@@ -16,11 +15,59 @@
         </description>
         <priority>3</priority>
         <example>
-<![CDATA[
+            <![CDATA[
  （一）【强制】类名使用 UpperCamelCase 风格
 正例：ForceCode / UserDO / HtmlDTO / XmlService / TcpUdpDeal / TaPromotion
 反例：forcecode / UserDo / HTMLDto / XMLService / TCPUDPDeal / TAPromotion
 ]]>
         </example>
     </rule>
+
+
+    <rule name="VariableNameRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNameRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNameRule">
+        <description>
+            （二）【强制】所有编程相关的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。
+            说明：正确的英文拼写和语法可以让阅读者易于理解，避免歧义。注意，纯拼音命名方式更要避免采用。
+            （三）【强制】方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风格。
+            （四）【强制】代码中的命名均不能以下划线或美元符号开始，也不能以下划线或美元符号结束。
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+（三）【强制】类名使用 UpperCamelCase 风格
+    正例： localValue / getHttpMessage() / inputUserId
+（四）【强制】代码中的命名均不能以下划线或美元符号开始，也不能以下划线或美元符号结束。
+    反例：_name / __name / $name / name_ / name$ / name__
+]]>
+
+        </example>
+    </rule>
+
+
+    <rule name="MethodNamingShouldBeCamelRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.MethodNamingShouldBeCamelRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.MethodNamingShouldBeCamelRule">
+        <description>
+            （二）【强制】所有编程相关的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。
+            说明：正确的英文拼写和语法可以让阅读者易于理解，避免歧义。注意，纯拼音命名方式更要避免采用。
+            （三）【强制】方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风格。
+            （四）【强制】代码中的命名均不能以下划线或美元符号开始，也不能以下划线或美元符号结束。
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+（三）【强制】方法使用 UpperCamelCase 风格
+    正例： localValue / getHttpMessage() / inputUserId
+]]>
+
+        </example>
+    </rule>
+
+
 </ruleset>

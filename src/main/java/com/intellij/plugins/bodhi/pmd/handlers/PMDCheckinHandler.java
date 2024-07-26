@@ -49,7 +49,7 @@ import java.util.stream.IntStream;
 public class PMDCheckinHandler extends CheckinHandler {
 
     private static final Log log = LogFactory.getLog(PMDCheckinHandler.class);
-    private static final String BUNDLE = "messages.PMD-Intellij";
+    public static final String BUNDLE = "messages.PMD-Intellij";
 
     @NonNls
     private final CheckinProjectPanel checkinProjectPanel;
@@ -106,11 +106,7 @@ public class PMDCheckinHandler extends CheckinHandler {
         if (!plugin.isScanFilesBeforeCheckin()) {
             return ReturnResult.COMMIT;
         }
-
         List<PMDRuleSetNode> ruleSetResultNodes = new ArrayList<>();
-//        plugin.getCustomRuleSetPaths().add();
-//        todo 自定义规则
-
         for (String ruleSetPath : plugin.getCustomRuleSetPaths()) {
             PMDRuleSetNode ruleSetResultNode = scanFiles(ruleSetPath, plugin);
             if (ruleSetResultNode != null) {
@@ -207,6 +203,7 @@ public class PMDCheckinHandler extends CheckinHandler {
         int violations = toViolations(ruleSetResultNodes);
         if (violations > 0) {
             int answer = promptUser(project, violations);
+//            todo 如果有violation不能提交，在这处理
             if (answer == Messages.OK) {
                 showToolWindow(ruleSetResultNodes, project);
                 return ReturnResult.CLOSE_WINDOW;

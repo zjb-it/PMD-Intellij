@@ -1,7 +1,11 @@
 package com.intellij.plugins.bodhi.pmd.tree;
 
+import com.intellij.AbstractBundle;
 import com.intellij.plugins.bodhi.pmd.PMDResultPanel;
 
+import java.util.ResourceBundle;
+
+import static com.intellij.plugins.bodhi.pmd.handlers.PMDCheckinHandler.BUNDLE;
 import static com.intellij.ui.SimpleTextAttributes.ERROR_ATTRIBUTES;
 import static com.intellij.ui.SimpleTextAttributes.GRAYED_ATTRIBUTES;
 
@@ -12,11 +16,6 @@ import static com.intellij.ui.SimpleTextAttributes.GRAYED_ATTRIBUTES;
  * @version 1.1
  */
 public class PMDRootNode extends PMDBranchNode {
-
-    /**
-     * Label of the root node.
-     */
-    private static final String LABEL = "PMD Results";
 
     /**
      * The panel where tree resides
@@ -36,7 +35,7 @@ public class PMDRootNode extends PMDBranchNode {
      * @param panel panel where tree resides
      */
     public PMDRootNode(PMDResultPanel panel) {
-        super(LABEL);
+        super(AbstractBundle.message(ResourceBundle.getBundle(BUNDLE), "scan.result.label"));
         resultPanel = panel;
     }
 

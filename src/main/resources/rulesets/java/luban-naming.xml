@@ -88,5 +88,13 @@
         <priority>3</priority>
     </rule>
 
+    <rule name="TestClassShouldEndWithTestNamingRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.TestClassShouldEndWithTestNamingRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.TestClassShouldEndWithTestNamingRule">
+        <priority>3</priority>
+    </rule>
+
 
 </ruleset>

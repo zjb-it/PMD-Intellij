@@ -16,11 +16,14 @@
 package com.intellij.plugins.bodhi.pmd.lang.java.rule;
 
 import net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration;
-import net.sourceforge.pmd.lang.java.rule.codestyle.MethodNamingConventionsRule;
 import net.sourceforge.pmd.lang.java.rule.internal.TestFrameworksUtil;
 
-public class TestClassShouldEndWithTestNamingRule extends MethodNamingConventionsRule {
+public class TestClassShouldEndWithTestNamingRule extends AbstractLuBanRule {
     private static final String TEST_SUFFIX = "Test";
+
+    public TestClassShouldEndWithTestNamingRule() {
+        super(ASTMethodDeclaration.class);
+    }
 
     @Override
     public Object visit(ASTMethodDeclaration node, Object data) {

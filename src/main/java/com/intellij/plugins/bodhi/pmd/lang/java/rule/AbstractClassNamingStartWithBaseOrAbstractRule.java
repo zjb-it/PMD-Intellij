@@ -1,9 +1,14 @@
 package com.intellij.plugins.bodhi.pmd.lang.java.rule;
 
 import net.sourceforge.pmd.lang.java.ast.ASTClassDeclaration;
+import net.sourceforge.pmd.lang.java.ast.JavaNode;
 import net.sourceforge.pmd.lang.java.rule.codestyle.ClassNamingConventionsRule;
 
-public class AbstractClassNamingStartWithBaseOrAbstractRule extends ClassNamingConventionsRule {
+public class AbstractClassNamingStartWithBaseOrAbstractRule extends AbstractLuBanRule {
+
+    public AbstractClassNamingStartWithBaseOrAbstractRule() {
+        super(ASTClassDeclaration.class);
+    }
 
     @Override
     public Object visit(ASTClassDeclaration node, Object data) {
@@ -13,10 +18,5 @@ public class AbstractClassNamingStartWithBaseOrAbstractRule extends ClassNamingC
             }
         }
         return super.visit(node, data);
-    }
-
-    @Override
-    public String getMessage() {
-        return AbstractLuBanRule.getMessage(this);
     }
 }

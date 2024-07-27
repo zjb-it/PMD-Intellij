@@ -14,17 +14,6 @@ public class ClassNamingShouldBeCamelRule extends ClassNamingConventionsRule {
     private static final Pattern PATTERN = Pattern.compile(regex);
 
 
-
-
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
-        if (node.isAbstract()) {
-            if (!node.getSimpleName().startsWith("Base") && !node.getSimpleName().startsWith("Abstract")) {
-                asCtx(data).addViolationWithMessage(node,"（九）【建议】抽象类 {0} 命名使用 Abstract 或 Base 开头",node.getSimpleName());
-            }
-        }
-        return super.visit(node, data);
-    }
     @Override
     public boolean isPropertyOverridden(PropertyDescriptor<?> propertyDescriptor) {
         return Objects.equals(propertyDescriptor.name(), "classPattern") && super.isPropertyOverridden(propertyDescriptor);

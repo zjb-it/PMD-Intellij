@@ -23,9 +23,6 @@ import com.intellij.plugins.bodhi.pmd.PMDUtil;
 import com.intellij.plugins.bodhi.pmd.core.PMDResultCollector;
 import com.intellij.plugins.bodhi.pmd.core.PMDViolation;
 import com.intellij.plugins.bodhi.pmd.tree.*;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiJavaFile;
-import com.intellij.psi.PsiManager;
 import com.intellij.util.PairConsumer;
 import com.intellij.util.ui.UIUtil;
 import net.sourceforge.pmd.util.CollectionUtil;
@@ -136,8 +133,23 @@ public class PMDCheckinHandler extends CheckinHandler {
     }
 
     private List<PMDRuleSetEntryNode> checkCommitViolationNode(List<PMDRuleSetEntryNode> ruleSetResultNodes, Collection<Change> selectedChanges, Project currentProject) {
-        Map<String, Set<Integer>> changeLineMap = new HashMap<>();
-        selectedChanges.forEach(change -> {
+        Map<Change.Type, List<Change>> changeMap = selectedChanges.stream().collect(Collectors.groupingBy(Change::getType));
+        Set<String> addChange = changeMap.getOrDefault(Change.Type.NEW, Collections.emptyList())
+                .stream()
+                .map(change -> getClassPath(change.getVirtualFile()))
+                .collect(Collectors.toSet());
+
+        Set<String> deleteChange = changeMap.getOrDefault(Change.Type.DELETED, Collections.emptyList())
+                .stream()
+                .map(change ->getClassPath(change.getVirtualFile()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        Map<String, Set<Integer>> modifyLineMap = new HashMap<>();
+
+        List<Change> changeList = changeMap.getOrDefault(Change.Type.MODIFICATION, Collections.emptyList());
+        changeList.addAll(changeMap.getOrDefault(Change.Type.MOVED, Collections.emptyList()));
+        changeList.forEach(change -> {
             VirtualFile virtualFile = change.getVirtualFile();
             if (Objects.nonNull(virtualFile)) {
                 LineStatusTracker<?> lineStatusTracker = LineStatusTrackerManager.getInstance(currentProject).getLineStatusTracker(virtualFile);
@@ -148,13 +160,10 @@ public class PMDCheckinHandler extends CheckinHandler {
                             Set<Integer> collect = IntStream.range(range.getLine1(), range.getLine2() + 1)
                                     .boxed()
                                     .collect(Collectors.toSet());
-                            PsiFile psiFile = PsiManager.getInstance(currentProject).findFile(virtualFile);
-                            if (psiFile instanceof PsiJavaFile javaFile) {
-                                String classPath = javaFile.getPackageName() + "." + javaFile.getName().replace(".java", "");
-                                Set<Integer> lines = changeLineMap.getOrDefault(classPath, new HashSet<>());
-                                lines.addAll(collect);
-                                changeLineMap.put(classPath, lines);
-                            }
+                            String classPath = getClassPath(virtualFile);
+                            Set<Integer> lines = modifyLineMap.getOrDefault(classPath, new HashSet<>());
+                            lines.addAll(collect);
+                            modifyLineMap.put(classPath, lines);
                         });
                     }
                 }
@@ -163,29 +172,43 @@ public class PMDCheckinHandler extends CheckinHandler {
         List<PMDRuleSetEntryNode> result = new ArrayList<>();
         for (PMDRuleSetEntryNode node : ruleSetResultNodes) {
             int childCount = node.getChildCount();
-            List<Integer> oldNodes = new ArrayList<>();
+            List<Integer> oldChildNodeIndex = new ArrayList<>();
             for (int i = 0; i < childCount; i++) {
                 TreeNode child = node.getChildAt(i);
                 if (child instanceof PMDViolationNode violationNode) {
                     PMDViolation pmdViolation = violationNode.getPmdViolation();
+                    String classPath = getClassPath(pmdViolation.getFilePath());
+                    if (addChange.contains(classPath) || deleteChange.contains(classPath)) {
+                        continue;
+                    }
                     Set<Integer> collect = IntStream.range(pmdViolation.getBeginLine(), pmdViolation.getEndLine() + 1)
                             .boxed()
                             .collect(Collectors.toSet());
-                    String classPath = pmdViolation.getPackageName() + "." + pmdViolation.getClassName();
-                    Set<Integer> changeLines = changeLineMap.getOrDefault(classPath, Set.of());
+                    Set<Integer> changeLines = modifyLineMap.getOrDefault(classPath, Set.of());
 //                    忽略以前的violation
                     if (CollectionUtil.intersect(changeLines, collect).isEmpty()) {
-                        oldNodes.add(i);
+                        oldChildNodeIndex.add(i);
                     }
                 }
-
             }
-            oldNodes.forEach(node::remove);
+            Collections.reverse(oldChildNodeIndex);
+            oldChildNodeIndex.forEach(node::remove);
             if (node.getChildCount() > 0) {
                 result.add(node);
             }
         }
         return result;
+    }
+
+    private static @Nullable String getClassPath(VirtualFile virtualFile) {
+        if (virtualFile == null) {
+            return null;
+        }
+        return getClassPath(virtualFile.getCanonicalPath());
+    }
+
+    private static @Nullable String getClassPath(String path) {
+        return path.replace("/",".").replace("\\",".");
     }
 
     private PMDRuleSetNode createRuleSetNodeWithResults(String ruleSetPath, List<PMDRuleSetEntryNode> ruleResultNodes) {

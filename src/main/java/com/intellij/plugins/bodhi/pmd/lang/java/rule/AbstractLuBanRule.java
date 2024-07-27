@@ -95,7 +95,11 @@ public abstract class AbstractLuBanRule extends AbstractJavaRulechainRule {
     }
 
     public String getMessage() {
-        return MESSAGES_BUNDLE.getString(this.getClass().getName() + ".violation.msg");
+        String key = this.getClass().getName() + ".violation.msg";
+        if (MESSAGES_BUNDLE.containsKey(key)) {
+            return MESSAGES_BUNDLE.getString(key);
+        }
+        return "未配置message";
     }
 
     public static @NotNull String getMessage(AbstractRule abstractJavaRule) {

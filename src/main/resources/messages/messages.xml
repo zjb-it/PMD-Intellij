@@ -33,7 +33,11 @@
             （九）【建议】测试类 【{0}】 命名使用 Test 结尾
         ]]>
     </entry>
-
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNamingRule.violation.msg">
+        <![CDATA[
+            【{0}】不符合规则，正则要求：{1}]
+        ]]>
+    </entry>
 
 
 

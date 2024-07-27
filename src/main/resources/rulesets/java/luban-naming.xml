@@ -85,6 +85,9 @@
           since="1.6"
           message="com.intellij.plugins.bodhi.pmd.lang.java.rule.ExceptionClassNamingEndWithBaseExceptionRule.violation.msg"
           class="com.intellij.plugins.bodhi.pmd.lang.java.rule.ExceptionClassNamingEndWithBaseExceptionRule">
+        <description>
+            （九）异常类命名使用 Exception 结尾
+        </description>
         <priority>3</priority>
     </rule>
 
@@ -93,8 +96,33 @@
           since="1.6"
           message="com.intellij.plugins.bodhi.pmd.lang.java.rule.TestClassShouldEndWithTestNamingRule.violation.msg"
           class="com.intellij.plugins.bodhi.pmd.lang.java.rule.TestClassShouldEndWithTestNamingRule">
+        <description>
+            （九）测试类命名以它要测试的类的名称开始，以 Test 结尾
+        </description>
         <priority>3</priority>
     </rule>
 
+
+    <rule name="VariableNamingRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNamingRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNamingRule">
+        <description>
+            （二）【强制】所有编程相关的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。
+            说明：正确的英文拼写和语法可以让阅读者易于理解，避免歧义。注意，纯拼音命名方式更要避免采用。
+            （三）【强制】方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风格。
+            （四）【强制】代码中的命名均不能以下划线或美元符号开始，也不能以下划线或美元符号结束。
+            （六）【强制】类型与中括号紧挨相连来表示数组
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+            正例：定义整形数组 int[] arrayDemo;
+            反例：在 main 参数中，使用 String args[]来定义。
+            ]]>
+
+        </example>
+    </rule>
 
 </ruleset>

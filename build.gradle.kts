@@ -21,8 +21,8 @@ repositories {
 }
 dependencies {
     implementation("net.sourceforge.pmd:pmd-core:${pmdVersion}")
-    implementation("net.sourceforge.pmd:pmd-apex:${pmdVersion}")
-    implementation("net.sourceforge.pmd:pmd-visualforce:${pmdVersion}")
+//    implementation("net.sourceforge.pmd:pmd-apex:${pmdVersion}")
+//    implementation("net.sourceforge.pmd:pmd-visualforce:${pmdVersion}")
     implementation("net.sourceforge.pmd:pmd-java:${pmdVersion}")
     implementation("net.sourceforge.pmd:pmd-javascript:${pmdVersion}")
     implementation("net.sourceforge.pmd:pmd-kotlin:${pmdVersion}")

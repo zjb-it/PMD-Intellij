@@ -2,8 +2,8 @@ package com.intellij.plugins.bodhi.pmd.lang.java.rule;
 
 
 import net.sourceforge.pmd.lang.java.ast.JavaNode;
-import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule;
 import net.sourceforge.pmd.lang.java.rule.AbstractJavaRulechainRule;
+import net.sourceforge.pmd.lang.rule.AbstractRule;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedInputStream;
@@ -13,7 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
 
-public abstract class AbstractBaseRule extends AbstractJavaRulechainRule {
+public abstract class AbstractLuBanRule extends AbstractJavaRulechainRule {
 
     public static final Set<String> ruleSetPath = Set.of("rulesets/java/luban-naming.xml");
 
@@ -90,7 +90,7 @@ public abstract class AbstractBaseRule extends AbstractJavaRulechainRule {
         }
     }
 
-    public AbstractBaseRule(Class<? extends JavaNode> first, Class<? extends JavaNode>... visits) {
+    public AbstractLuBanRule(Class<? extends JavaNode> first, Class<? extends JavaNode>... visits) {
         super(first, visits);
     }
 
@@ -98,7 +98,7 @@ public abstract class AbstractBaseRule extends AbstractJavaRulechainRule {
         return MESSAGES_BUNDLE.getString(this.getClass().getName() + ".violation.msg");
     }
 
-    public static @NotNull String getMessage(AbstractJavaRule abstractJavaRule) {
+    public static @NotNull String getMessage(AbstractRule abstractJavaRule) {
         return MESSAGES_BUNDLE.getString(abstractJavaRule.getClass().getName() + ".violation.msg");
     }
 }

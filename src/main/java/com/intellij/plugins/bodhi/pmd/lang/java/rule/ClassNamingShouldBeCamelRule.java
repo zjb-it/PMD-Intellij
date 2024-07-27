@@ -3,15 +3,9 @@ package com.intellij.plugins.bodhi.pmd.lang.java.rule;
 import net.sourceforge.pmd.lang.java.ast.ASTClassDeclaration;
 import net.sourceforge.pmd.lang.java.rule.codestyle.ClassNamingConventionsRule;
 import net.sourceforge.pmd.properties.PropertyDescriptor;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
-import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule;
-import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
-
-import static com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractBaseRule.MESSAGES_BUNDLE;
 
 public class ClassNamingShouldBeCamelRule extends ClassNamingConventionsRule {
 
@@ -20,6 +14,17 @@ public class ClassNamingShouldBeCamelRule extends ClassNamingConventionsRule {
     private static final Pattern PATTERN = Pattern.compile(regex);
 
 
+
+
+    @Override
+    public Object visit(ASTClassDeclaration node, Object data) {
+        if (node.isAbstract()) {
+            if (!node.getSimpleName().startsWith("Base") && !node.getSimpleName().startsWith("Abstract")) {
+                asCtx(data).addViolationWithMessage(node,"（九）【建议】抽象类 {0} 命名使用 Abstract 或 Base 开头",node.getSimpleName());
+            }
+        }
+        return super.visit(node, data);
+    }
     @Override
     public boolean isPropertyOverridden(PropertyDescriptor<?> propertyDescriptor) {
         return Objects.equals(propertyDescriptor.name(), "classPattern") && super.isPropertyOverridden(propertyDescriptor);
@@ -35,6 +40,6 @@ public class ClassNamingShouldBeCamelRule extends ClassNamingConventionsRule {
 
     @Override
     public String getMessage() {
-        return AbstractBaseRule.getMessage(this);
+        return AbstractLuBanRule.getMessage(this);
     }
 }

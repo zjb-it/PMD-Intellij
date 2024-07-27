@@ -6,9 +6,9 @@
         <![CDATA[ 【{0} {1} 】 不符合UpperCamelCase命名风格，正则要求：{2}]]>
     </entry>
 
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNameRule.violation.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.FieldNameRule.violation.msg">
         <![CDATA[
-            【{0}】不符合规则
+            【{0} {1} 】不符合规则，正则要求：{2}]
         ]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.MethodNamingShouldBeCamelRule.violation.msg">
@@ -16,6 +16,18 @@
             【{0} {1} 】不符合规则，正则要求：{2}]
         ]]>
     </entry>
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassNamingStartWithBaseOrAbstractRule.violation.msg">
+        <![CDATA[
+            （九）【建议】抽象类 【{0}】 命名使用 Abstract 或 Base 开头
+        ]]>
+    </entry>
+
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ExceptionClassNamingEndWithBaseExceptionRule.violation.msg">
+        <![CDATA[
+            （九）【建议】异常类 【{0}】 命名使用 Exception 结尾
+        ]]>
+    </entry>
+
 
 
 

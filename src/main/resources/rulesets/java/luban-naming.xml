@@ -24,17 +24,18 @@
     </rule>
 
 
-    <rule name="VariableNameRule"
+    <rule name="FieldNameRule"
           language="java"
           since="1.6"
-          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNameRule.violation.msg"
-          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNameRule">
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.FieldNameRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.FieldNameRule">
         <description>
             （二）【强制】所有编程相关的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。
             说明：正确的英文拼写和语法可以让阅读者易于理解，避免歧义。注意，纯拼音命名方式更要避免采用。
             （三）【强制】方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风格。
             （四）【强制】代码中的命名均不能以下划线或美元符号开始，也不能以下划线或美元符号结束。
             （六）【强制】类型与中括号紧挨相连来表示数组
+            （八）【建议】常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长。
         </description>
         <priority>3</priority>
         <example>
@@ -63,11 +64,28 @@
         <priority>3</priority>
         <example>
             <![CDATA[
-（三）【强制】方法使用 UpperCamelCase 风格
-    正例： localValue / getHttpMessage() / inputUserId
-]]>
+            （三）【强制】方法使用 UpperCamelCase 风格
+                正例： localValue / getHttpMessage() / inputUserId
+            ]]>
 
         </example>
+    </rule>
+
+
+    <rule name="AbstractClassNamingStartWithBaseOrAbstractRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassNamingStartWithBaseOrAbstractRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassNamingStartWithBaseOrAbstractRule">
+        <priority>3</priority>
+    </rule>
+
+    <rule name="ExceptionClassNamingEndWithBaseExceptionRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.ExceptionClassNamingEndWithBaseExceptionRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.ExceptionClassNamingEndWithBaseExceptionRule">
+        <priority>3</priority>
     </rule>
 
 

@@ -1,33 +1,15 @@
 package com.intellij.plugins.bodhi.pmd;
 
-import com.intellij.diff.contents.DiffContent;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.ActionGroup;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vcs.AbstractVcs;
-import com.intellij.openapi.vcs.ProjectLevelVcsManager;
-import com.intellij.openapi.vcs.VcsException;
-import com.intellij.openapi.vcs.changes.Change;
-import com.intellij.openapi.vcs.changes.ChangeList;
-import com.intellij.openapi.vcs.changes.ChangeListListener;
-import com.intellij.openapi.vcs.changes.ChangeListManager;
-import com.intellij.openapi.vcs.diff.DiffProvider;
-import com.intellij.openapi.vcs.ex.*;
-import com.intellij.openapi.vcs.history.CurrentRevision;
-import com.intellij.openapi.vcs.history.VcsHistoryUtil;
-import com.intellij.openapi.vcs.impl.LineStatusTrackerManager;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
@@ -35,18 +17,12 @@ import com.intellij.openapi.wm.ToolWindowType;
 import com.intellij.plugins.bodhi.pmd.actions.PMDCustom;
 import com.intellij.plugins.bodhi.pmd.actions.PreDefinedMenuGroup;
 import com.intellij.plugins.bodhi.pmd.core.PMDResultCollector;
-import com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractBaseRule;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractLuBanRule;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
-import com.intellij.util.DocumentUtil;
-import com.intellij.vcs.commit.SingleChangeListCommitWorkflowUi;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -289,7 +265,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
 
     public List<String> getCustomRuleSetPaths() {
         LinkedHashSet<String> result = new LinkedHashSet<>(customRuleSetPaths);
-        result.addAll(AbstractBaseRule.ruleSetPath);
+        result.addAll(AbstractLuBanRule.ruleSetPath);
         return new ArrayList<>(result);
     }
 

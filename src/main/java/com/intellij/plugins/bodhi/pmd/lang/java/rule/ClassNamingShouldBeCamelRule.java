@@ -1,6 +1,5 @@
 package com.intellij.plugins.bodhi.pmd.lang.java.rule;
 
-import net.sourceforge.pmd.lang.java.ast.ASTClassDeclaration;
 import net.sourceforge.pmd.lang.java.rule.codestyle.ClassNamingConventionsRule;
 import net.sourceforge.pmd.properties.PropertyDescriptor;
 

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<ruleset name="LuBanJavaComment" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>LuBanJavaComment</description>
+
+
+    <rule name="EndLineCommentMustHaveOneWhitespaceRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.comment.EndLineCommentMustHaveOneWhitespaceRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.comment.EndLineCommentMustHaveOneWhitespaceRule">
+        <description>
+            （一）【强制】注释的双斜线与注释内容之间有且仅有一个空格
+        </description>
+        <priority>3</priority>
+        <example>
+            正例：
+            // 这是示例注释，请注意在双斜线之后有一个空格
+            String commentString = new String();
+        </example>
+    </rule>
+
+
+
+</ruleset>

@@ -54,6 +54,10 @@
         <![CDATA[ 【{0}】不符合规则 ,【强制】左小括号和右边相邻字符之间不出现空格；右小括号和左边相邻字符之间也不出现空 格；而左大括号前需要加空格。 ]]>
     </entry>
 
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.comment.EndLineCommentMustHaveOneWhitespaceRule.violation.msg">
+        <![CDATA[ 【{0}】不符合规则 ,【强制】注释的双斜线与注释内容之间有且仅有一个空格 ]]>
+    </entry>
+
 
 
 

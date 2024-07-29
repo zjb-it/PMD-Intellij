@@ -22,6 +22,29 @@
         </example>
     </rule>
 
+    <rule name="JavadocCommentRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.comment.JavadocCommentRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.comment.JavadocCommentRule">
+        <description>
+            （二）【强制】类、类属性、类方法的注释必须使用Javadoc 规范使用/**内容*/格式，不得使用// xxx 方式。
+        </description>
+        <priority>3</priority>
+        <example>
+            正例：
+            正例：
+            /**
+            * @author yunfei.wang
+            * @date 2016/10/31
+            * @params test 传入参数描述
+            * @return int	返回参数描述
+            */
+            public int test1（String test）{
+            ... ...
+            }
+        </example>
+    </rule>
 
 
 </ruleset>

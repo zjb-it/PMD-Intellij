@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<ruleset name="LuBanJavaOOP" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>LuBanJavaOOP</description>
+
+
+    <rule name="EqualsNPERule"
+          language="java"
+          message=""
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            【强制】Object 的 equals 方法容易抛空指针异常，应使用常量或确定有值的对象来调用 equals
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//MethodCall[@MethodName = "equals" and ./VariableAccess[@CompileTimeConstant != true()] ]
+]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+            <![CDATA[
+            正例："test".equals(object);
+            反例：object.equals("test");
+            说明：推荐使用 java.util.Objects#equals（JDK7 引入的工具类）。
+            ]]>
+        </example>
+    </rule>
+
+
+    <rule name="BigDecimalAvoidDoubleConstructorRule"
+          language="java"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.BigDecimalAvoidDoubleConstructorRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.BigDecimalAvoidDoubleConstructorRule">
+        <description>
+            （四）【强制】禁止使用构造方法 BigDecimal(double)的方式把 double 值转化为 BigDecimal 对象。
+            说明：BigDecimal(double)存在精度损失风险，在精确计算或值比较的场景中可能会导致业务逻辑异常。如：BigDecimal g = new BigDecimal(0.1f); 实际的存储值为：0.10000000149
+        </description>
+        <priority>3</priority>
+        <example>
+            正例：优先推荐入参为 String 的构造方法，或使用 BigDecimal 的 valueOf 方法，此方法内部其实执行了Double 的 toString，而 Double 的 toString 按 double 的实际能表达的精度对尾数进行了截断。
+            BigDecimal recommend1 = new BigDecimal("0.1");
+            BigDecimal recommend2 = BigDecimal.valueOf(0.1);
+        </example>
+    </rule>
+
+
+
+</ruleset>

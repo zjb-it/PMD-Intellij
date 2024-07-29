@@ -24,7 +24,6 @@
 
     <rule name="JavadocCommentRule"
           language="java"
-          since="1.6"
           message="com.intellij.plugins.bodhi.pmd.lang.java.rule.comment.JavadocCommentRule.violation.msg"
           class="com.intellij.plugins.bodhi.pmd.lang.java.rule.comment.JavadocCommentRule">
         <description>

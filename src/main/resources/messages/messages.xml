@@ -62,6 +62,15 @@
         <![CDATA[ 【{0}】不符合规则 ,（二）【强制】类、类属性、类方法的注释必须使用Javadoc 规范使用/**内容*/格式，不得使用// xxx 方式。 ]]>
     </entry>
 
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.BigDecimalAvoidDoubleConstructorRule.violation.msg">
+        <![CDATA[ 【{0}】不符合规则 ,【强制】禁止使用构造方法 BigDecimal(double)的方式把 double 值转化为 BigDecimal 对象。。 ]]>
+    </entry>
+
+
+
+
+
+
 
 
 

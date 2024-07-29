@@ -1,5 +1,5 @@
 
-package com.intellij.plugins.bodhi.pmd.lang.java.rule;
+package com.intellij.plugins.bodhi.pmd.lang.java.rule.naming;
 
 import net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration;
 import net.sourceforge.pmd.lang.java.rule.internal.TestFrameworksUtil;

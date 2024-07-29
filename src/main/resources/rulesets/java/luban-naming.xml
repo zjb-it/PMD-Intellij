@@ -8,8 +8,8 @@
     <rule name="ClassNamingShouldBeCamelRule"
           language="java"
           since="1.6"
-          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.ClassNamingShouldBeCamelRule.violation.msg"
-          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.ClassNamingShouldBeCamelRule">
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.ClassNamingShouldBeCamelRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.ClassNamingShouldBeCamelRule">
         <description>
             【强制】类名使用 UpperCamelCase 风格
         </description>
@@ -27,8 +27,8 @@
     <rule name="FieldNameRule"
           language="java"
           since="1.6"
-          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.FieldNameRule.violation.msg"
-          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.FieldNameRule">
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.FieldNameRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.FieldNameRule">
         <description>
             （二）【强制】所有编程相关的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。
             说明：正确的英文拼写和语法可以让阅读者易于理解，避免歧义。注意，纯拼音命名方式更要避免采用。
@@ -54,8 +54,8 @@
     <rule name="MethodNamingShouldBeCamelRule"
           language="java"
           since="1.6"
-          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.MethodNamingShouldBeCamelRule.violation.msg"
-          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.MethodNamingShouldBeCamelRule">
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.MethodNamingShouldBeCamelRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.MethodNamingShouldBeCamelRule">
         <description>
             （二）【强制】所有编程相关的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。
             说明：正确的英文拼写和语法可以让阅读者易于理解，避免歧义。注意，纯拼音命名方式更要避免采用。
@@ -76,16 +76,16 @@
     <rule name="AbstractClassNamingStartWithBaseOrAbstractRule"
           language="java"
           since="1.6"
-          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassNamingStartWithBaseOrAbstractRule.violation.msg"
-          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassNamingStartWithBaseOrAbstractRule">
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.AbstractClassNamingStartWithBaseOrAbstractRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.AbstractClassNamingStartWithBaseOrAbstractRule">
         <priority>3</priority>
     </rule>
 
     <rule name="ExceptionClassNamingEndWithBaseExceptionRule"
           language="java"
           since="1.6"
-          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.ExceptionClassNamingEndWithBaseExceptionRule.violation.msg"
-          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.ExceptionClassNamingEndWithBaseExceptionRule">
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.ExceptionClassNamingEndWithBaseExceptionRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.ExceptionClassNamingEndWithBaseExceptionRule">
         <description>
             （九）异常类命名使用 Exception 结尾
         </description>
@@ -95,8 +95,8 @@
     <rule name="TestClassShouldEndWithTestNamingRule"
           language="java"
           since="1.6"
-          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.TestClassShouldEndWithTestNamingRule.violation.msg"
-          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.TestClassShouldEndWithTestNamingRule">
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.TestClassShouldEndWithTestNamingRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.TestClassShouldEndWithTestNamingRule">
         <description>
             （九）测试类命名以它要测试的类的名称开始，以 Test 结尾
         </description>
@@ -107,8 +107,8 @@
     <rule name="VariableNamingRule"
           language="java"
           since="1.6"
-          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNamingRule.violation.msg"
-          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNamingRule">
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.VariableNamingRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.VariableNamingRule">
         <description>
             （二）【强制】所有编程相关的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。
             说明：正确的英文拼写和语法可以让阅读者易于理解，避免歧义。注意，纯拼音命名方式更要避免采用。
@@ -130,8 +130,8 @@
     <rule name="PackageNameLowerCaseRule"
           language="java"
           since="1.6"
-          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.PackageNameLowerCaseRule.violation.msg"
-          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.PackageNameLowerCaseRule">
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.PackageNameLowerCaseRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.PackageNameLowerCaseRule">
         <description>
             （十三）【强制】包名统一使用小写，点分隔符之间有且仅有一个自然语义的英语单词。包名统一使用单数形式，但是类名如果有复数含义，类名可以使用复数形式。
         </description>
@@ -140,5 +140,20 @@
             正例：应用工具类包名为 com.alibaba.ei.kunlun.aap.util、类名为 MessageUtils（此规则参考 spring 的框架结构）
         </example>
     </rule>
+
+    <rule name="UpperEllRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.constant.UpperEllRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.constant.UpperEllRule">
+        <description>
+            （一）【强制】在 long 或者 Long 赋值时，数值后使用大写的 L，不能是小写的 l，小写容易跟数字 混淆，造成误解。
+            说明：Long a = 2l; 写的是数字的 21，还是 Long 型的 2。
+        </description>
+        <priority>3</priority>
+        <example>
+        </example>
+    </rule>
+
 
 </ruleset>

@@ -2,50 +2,52 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <!--naming-->
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ClassNamingShouldBeCamelRule.violation.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.ClassNamingShouldBeCamelRule.violation.msg">
         <![CDATA[ 【{0} {1} 】 不符合UpperCamelCase命名风格，正则要求：{2}]]>
     </entry>
 
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.FieldNameRule.violation.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.FieldNameRule.violation.msg">
         <![CDATA[
             【{0} {1} 】不符合规则，正则要求：{2}]
         ]]>
     </entry>
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.MethodNamingShouldBeCamelRule.violation.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.MethodNamingShouldBeCamelRule.violation.msg">
         <![CDATA[
             【{0} {1} 】不符合规则，正则要求：{2}]
         ]]>
     </entry>
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassNamingStartWithBaseOrAbstractRule.violation.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.AbstractClassNamingStartWithBaseOrAbstractRule.violation.msg">
         <![CDATA[
             （九）【建议】抽象类 【{0}】 命名使用 Abstract 或 Base 开头
         ]]>
     </entry>
 
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ExceptionClassNamingEndWithBaseExceptionRule.violation.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.ExceptionClassNamingEndWithBaseExceptionRule.violation.msg">
         <![CDATA[
             （九）【建议】异常类 【{0}】 命名使用 Exception 结尾
         ]]>
     </entry>
 
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.TestClassShouldEndWithTestNamingRule.violation.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.TestClassShouldEndWithTestNamingRule.violation.msg">
         <![CDATA[
             （九）【建议】测试类 【{0}】 命名使用 Test 结尾
         ]]>
     </entry>
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.VariableNamingRule.violation.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.VariableNamingRule.violation.msg">
         <![CDATA[
             【{0}】不符合规则，正则要求：{1}]
         ]]>
     </entry>
 
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.PackageNameLowerCaseRule.violation.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.PackageNameLowerCaseRule.violation.msg">
         <![CDATA[
             包名【{0}】不符合规则，包名统一使用小写，点分隔符之间有且仅有一个自然语义的英语单词。包名统一使用单数形式，但是类名如果有复数含义，类名可以使用复数形式
         ]]>
     </entry>
 
-
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.constant.UpperEllRule.violation.msg">
+        <![CDATA[ 【{0}】 应使用大写L ]]>
+    </entry>
 
 
 
@@ -81,7 +83,7 @@
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ServiceOrDaoClassShouldEndWithImplRule.violation.msg">
         <![CDATA[类名 【{0}】 应以Impl结尾]]>
     </entry>
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.TestClassShouldEndWithTestNamingRule.violation.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.TestClassShouldEndWithTestNamingRule.violation.msg">
         <![CDATA[测试类 【{0}】 命名应以Test结尾]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.IbatisMethodQueryForListRule.violation.msg">
@@ -115,7 +117,7 @@
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.IbatisMethodQueryForListRule.rule.msg">
         <![CDATA[iBATIS自带的queryForList(String statementName,int start,int size)不推荐使用]]>
     </entry>
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ClassNamingShouldBeCamelRule.rule.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.ClassNamingShouldBeCamelRule.rule.msg">
         <![CDATA[类名使用UpperCamelCase风格，必须遵从驼峰形式，但以下情形例外：（领域模型的相关命名）DO / DTO/ ]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassShouldStartWithAbstractNamingRule.rule.msg">
@@ -124,7 +126,7 @@
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.ExceptionClassShouldEndWithExceptionRule.rule.msg">
         <![CDATA[异常类命名使用Exception结尾]]>
     </entry>
-    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.TestClassShouldEndWithTestNamingRule.rule.msg">
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.TestClassShouldEndWithTestNamingRule.rule.msg">
         <![CDATA[测试类命名以它要测试的类的名称开始，以Test结尾]]>
     </entry>
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.LowerCamelCaseVariableNamingRule.rule.msg">

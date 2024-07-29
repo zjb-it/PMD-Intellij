@@ -17,7 +17,7 @@ import com.intellij.openapi.wm.ToolWindowType;
 import com.intellij.plugins.bodhi.pmd.actions.PMDCustom;
 import com.intellij.plugins.bodhi.pmd.actions.PreDefinedMenuGroup;
 import com.intellij.plugins.bodhi.pmd.core.PMDResultCollector;
-import com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractLuBanRule;
+import com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.AbstractLuBanRule;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import org.jetbrains.annotations.NonNls;

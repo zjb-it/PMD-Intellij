@@ -1,8 +1,6 @@
-package com.intellij.plugins.bodhi.pmd.lang.java.rule;
+package com.intellij.plugins.bodhi.pmd.lang.java.rule.naming;
 
 import net.sourceforge.pmd.lang.java.ast.ASTClassDeclaration;
-import net.sourceforge.pmd.lang.java.ast.JavaNode;
-import net.sourceforge.pmd.lang.java.rule.codestyle.ClassNamingConventionsRule;
 
 public class AbstractClassNamingStartWithBaseOrAbstractRule extends AbstractLuBanRule {
 

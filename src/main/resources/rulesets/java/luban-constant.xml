@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<ruleset name="LuBanJavaConstant" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>LuBanJavaConstant</description>
+
+
+    <rule name="UpperEllRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.constant.UpperEllRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.constant.UpperEllRule">
+        <description>
+            （一）【强制】在 long 或者 Long 赋值时，数值后使用大写的 L，不能是小写的 l，小写容易跟数字 混淆，造成误解。
+            说明：Long a = 2l; 写的是数字的 21，还是 Long 型的 2。
+        </description>
+        <priority>3</priority>
+        <example>
+        </example>
+    </rule>
+
+    <rule name="IfStatementRule"
+          language="java"
+          since="1.6"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.constant.IfStatementRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.constant.IfStatementRule">
+        <description>
+            （二）【强制】左小括号和右边相邻字符之间不出现空格；右小括号和左边相邻字符之间也不出现空 格；而左大括号前需要加空格。
+        </description>
+        <priority>3</priority>
+        <example>
+            反例：if (空格 a == b 空格)
+        </example>
+    </rule>
+
+
+</ruleset>

@@ -141,19 +141,4 @@
         </example>
     </rule>
 
-    <rule name="UpperEllRule"
-          language="java"
-          since="1.6"
-          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.constant.UpperEllRule.violation.msg"
-          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.constant.UpperEllRule">
-        <description>
-            （一）【强制】在 long 或者 Long 赋值时，数值后使用大写的 L，不能是小写的 l，小写容易跟数字 混淆，造成误解。
-            说明：Long a = 2l; 写的是数字的 21，还是 Long 型的 2。
-        </description>
-        <priority>3</priority>
-        <example>
-        </example>
-    </rule>
-
-
 </ruleset>

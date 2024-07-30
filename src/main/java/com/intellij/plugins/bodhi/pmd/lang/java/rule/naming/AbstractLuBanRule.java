@@ -1,6 +1,7 @@
 package com.intellij.plugins.bodhi.pmd.lang.java.rule.naming;
 
 
+import net.sourceforge.pmd.lang.ast.Node;
 import net.sourceforge.pmd.lang.java.ast.JavaNode;
 import net.sourceforge.pmd.lang.java.rule.AbstractJavaRulechainRule;
 import net.sourceforge.pmd.lang.rule.AbstractRule;
@@ -104,5 +105,9 @@ public abstract class AbstractLuBanRule extends AbstractJavaRulechainRule {
 
     public static @NotNull String getMessage(AbstractRule abstractJavaRule) {
         return MESSAGES_BUNDLE.getString(abstractJavaRule.getClass().getName() + ".violation.msg");
+    }
+
+    public void addViolation(Node node, Object data, String... args) {
+        asCtx(data).addViolation(node, args);
     }
 }

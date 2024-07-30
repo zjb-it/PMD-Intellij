@@ -25,7 +25,7 @@ public class AvoidIsGetMethodCoexistRule extends AbstractLuBanRule {
         map.forEach((k, methods) -> {
             if (methods.size() > 1) {
                 methods.forEach(method -> {
-                    addViolation(method, data, method.getName());
+                    addViolation(data,method, method.getName());
                 });
             }
         });

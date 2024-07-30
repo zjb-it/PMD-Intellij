@@ -14,7 +14,7 @@ public class AvoidJavaSqlDateRule extends AbstractLuBanRule {
     public Object visit(ASTVariableId node, Object data) {
         ASTType typeNode = node.getTypeNode();
         if (TypeTestUtil.isA(java.sql.Date.class, typeNode)|| TypeTestUtil.isA(java.sql.Time.class, typeNode) || TypeTestUtil.isA(java.sql.Timestamp.class, typeNode)) {
-            addViolation(node,data,node.getName());
+            addViolation(data,node,node.getName());
         }
         return super.visit(node, data);
     }
@@ -23,7 +23,7 @@ public class AvoidJavaSqlDateRule extends AbstractLuBanRule {
     public Object visit(ASTConstructorCall node, Object data) {
         ASTType typeNode = node.getTypeNode();
         if (TypeTestUtil.isA(java.sql.Date.class, typeNode)|| TypeTestUtil.isA(java.sql.Time.class, typeNode) || TypeTestUtil.isA(java.sql.Timestamp.class, typeNode)) {
-            addViolation(node,data,node.getText().toString());
+            addViolation(data,node,node.getText().toString());
         }
         return super.visit(node, data);
     }

@@ -107,7 +107,8 @@ public abstract class AbstractLuBanRule extends AbstractJavaRulechainRule {
         return MESSAGES_BUNDLE.getString(abstractJavaRule.getClass().getName() + ".violation.msg");
     }
 
-    public void addViolation(Node node, Object data, String... args) {
+    public void addViolation(Object data, Node node, Object... args) {
         asCtx(data).addViolation(node, args);
     }
+
 }

@@ -82,6 +82,10 @@
         <![CDATA[ 【{0}】不符合规则 ,【强制】禁止在 POJO 类中，同时存在对应属性 xxx 的 isXxx()和 getXxx()方法 ]]>
     </entry>
 
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.flowcontrol.SwitchBranchMustBreakRule.violation.msg">
+        <![CDATA[ 【{0}】不符合规则  ]]>
+    </entry>
+
 
 
 

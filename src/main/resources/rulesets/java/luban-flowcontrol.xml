@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<ruleset name="LuBanJavaFlowControl" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>LuBanJavaFlowControl</description>
+
+    <rule name="SwitchExpressionRule"
+          language="java"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.flowcontrol.SwitchBranchMustBreakRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.flowcontrol.SwitchBranchMustBreakRule">
+        <description>
+            （一）【强制】在一个 switch 块内，每个 case 必须通过 continue/break/return 等来终止注释说明程序将继续执行到哪一个 case 为止。
+            说明：注意 break 是退出 switch 语句块，而 return 是退出方法体。
+        </description>
+        <priority>2</priority>
+        <example>
+            <![CDATA[
+    switch (x) {
+        case 1:
+            break;
+        case 2:
+            break;
+        default:
+    }
+			]]>
+        </example>
+    </rule>
+
+    <rule name="SwitchMustHavingDefaultRule"
+          language="java"
+          message="【强制】在一个 switch 块内，都必须包含一个 default语句并且放在最后，即使它什么代码也没有"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            （一）【强制】在一个 switch 块内，都必须包含一个 default语句并且放在最后，即使它什么代码也没有。
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//SwitchStatement[count(SwitchFallthroughBranch[SwitchLabel[@Default=true()]])<1]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+
+</ruleset>

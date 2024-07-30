@@ -16,7 +16,7 @@ public class OverrideMethodMustOverrideAnnotationRule extends AbstractLuBanRule 
     public Object visit(ASTMethodDeclaration node, Object data) {
         if (node.isOverridden()) {
             if (!node.isAnnotationPresent(Override.class)) {
-                addViolation(node, data, node.getName());
+                addViolation(data, node, node.getName());
             }
         }
         return super.visit(node, data);

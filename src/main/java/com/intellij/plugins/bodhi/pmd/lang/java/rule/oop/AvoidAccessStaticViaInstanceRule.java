@@ -20,7 +20,7 @@ public class AvoidAccessStaticViaInstanceRule extends AbstractLuBanRule {
         if (node.getMethodType().isStatic()) {
             NodeStream<JavaNode> children = node.children(ASTTypeExpression.class);
             if (children.isEmpty()) {
-                addViolation(node, data, node.getMethodName());
+                addViolation(data,node, node.getMethodName());
             }
         }
         return super.visit(node, data);

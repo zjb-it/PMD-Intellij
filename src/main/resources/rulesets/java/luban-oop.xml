@@ -87,5 +87,17 @@
         </example>
     </rule>
 
+    <rule name="AvoidIsGetMethodCoexistRule"
+          language="java"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.AvoidIsGetMethodCoexistRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.AvoidIsGetMethodCoexistRule">
+        <description>
+            框架在调用属性 xxx 的提取方法时，并不能确定哪个方法一定是被优先调用到，神坑之一。
+        </description>
+        <priority>3</priority>
+        <example>
+        </example>
+    </rule>
+
 
 </ruleset>

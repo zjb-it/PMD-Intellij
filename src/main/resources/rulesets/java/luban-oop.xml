@@ -75,5 +75,17 @@
         </example>
     </rule>
 
+    <rule name="OverrideMethodMustOverrideAnnotationRule"
+          language="java"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.OverrideMethodMustOverrideAnnotationRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.OverrideMethodMustOverrideAnnotationRule">
+        <description>
+            说明：getObject()与 get0bject()的问题。一个是字母的 O，一个是数字的 0，加@Override 可以准确判断是否覆盖成功。另外，如果在抽象类中对方法签名进行修改，其实现类会马上编译报错。
+        </description>
+        <priority>3</priority>
+        <example>
+        </example>
+    </rule>
+
 
 </ruleset>

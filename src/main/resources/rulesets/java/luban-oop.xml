@@ -63,6 +63,17 @@
         </example>
     </rule>
 
+    <rule name="AvoidAccessStaticViaInstanceRule"
+          language="java"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.AvoidAccessStaticViaInstanceRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.AvoidAccessStaticViaInstanceRule">
+        <description>
+            （六）【强制】避免通过一个类的对象引用访问此类的静态变量或静态方法无谓增加编译器解析成本，直接用类名来访问即可。
+        </description>
+        <priority>3</priority>
+        <example>
+        </example>
+    </rule>
 
 
 </ruleset>

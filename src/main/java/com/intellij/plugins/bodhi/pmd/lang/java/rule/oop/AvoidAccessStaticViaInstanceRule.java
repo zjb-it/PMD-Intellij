@@ -22,8 +22,8 @@ public class AvoidAccessStaticViaInstanceRule extends AbstractLuBanRule {
 
     @Override
     public Object visit(ASTFieldAccess node, Object data) {
-        if (!(node.getQualifier() instanceof ASTTypeExpression)) {
-            addViolation(data,node, node.getName());
+        if (node.isCompileTimeConstant() && !(node.getQualifier() instanceof ASTTypeExpression)) {
+            addViolation(data, node, node.getName());
         }
         return super.visit(node, data);
     }

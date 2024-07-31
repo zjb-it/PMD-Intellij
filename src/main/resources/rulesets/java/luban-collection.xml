@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<ruleset name="LuBanCollection" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>LuBanCollection</description>
+
+    <rule name="EqualsHashCodeRule"
+          language="java"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.collection.EqualsHashCodeRule">
+        <description>
+            1.只要重写 equals，就必须重写 hashCode；
+        </description>
+        <priority>3</priority>
+    </rule>
+
+
+</ruleset>

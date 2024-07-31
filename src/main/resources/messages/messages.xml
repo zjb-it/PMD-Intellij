@@ -90,7 +90,9 @@
         <![CDATA[ 【{0}】不符合规则 ,【强制】在 if/else/for/while/do 语句中必须使用大括号。]]>
     </entry>
 
-
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.collection.EqualsHashCodeRule.violation.msg">
+        <![CDATA[ 【{0}】不符合规则 ,1.只要重写 equals，就必须重写 hashCode；]]>
+    </entry>
 
 
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassShouldStartWithAbstractNamingRule.violation.msg">

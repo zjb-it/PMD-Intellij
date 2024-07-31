@@ -86,7 +86,9 @@
         <![CDATA[ 【{0}】不符合规则  ]]>
     </entry>
 
-
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.flowcontrol.BlockMustHavingDelimiterRule.violation.msg">
+        <![CDATA[ 【{0}】不符合规则 ,【强制】在 if/else/for/while/do 语句中必须使用大括号。]]>
+    </entry>
 
 
 

@@ -46,5 +46,20 @@
         </properties>
     </rule>
 
+    <rule name="BlockMustHavingDelimiterRule"
+          language="java"
+          message="com.intellij.plugins.bodhi.pmd.lang.java.rule.flowcontrol.BlockMustHavingDelimiterRule.violation.msg"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.flowcontrol.BlockMustHavingDelimiterRule">
+        <description>
+            （三）【强制】在 if/else/for/while/do 语句中必须使用大括号。
+        </description>
+        <priority>2</priority>
+        <example>
+            <![CDATA[
+        反例：即使只有一行代码，禁止不采用大括号的编码方式：if (condition) statements;
+			]]>
+        </example>
+    </rule>
+
 
 </ruleset>

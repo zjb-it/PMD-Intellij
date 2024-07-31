@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<ruleset name="LuBanJavaDate" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>LuBanJavaDate</description>
+
+
+
+    <rule name="AvoidDateGetTimeRule"
+          language="java"
+          message="【强制】获取当前毫秒数System.currentTimeMillis();而不是new Date().getTime()。"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            说明：如果想获取更加精确的纳秒级时间值，使用 System.nanoTime 的方式。在 JDK8 中，针对统计时间等场景，推荐使用 Instant 类。
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//MethodCall[pmd-java:matchesSig("java.util.Date#getTime()")]
+
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+
+</ruleset>

@@ -93,7 +93,6 @@
 
 
 
-
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassShouldStartWithAbstractNamingRule.violation.msg">
         <![CDATA[抽象类 【{0}】 命名应以Abstract或Base开头]]>
     </entry>

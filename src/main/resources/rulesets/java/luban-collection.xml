@@ -57,4 +57,39 @@
     </rule>
 
 
+    <rule name="CollectorsToMapMustMergeFunctionRule"
+          language="java"
+          message="message"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            （三）【强制】在使用 java.util.stream.Collectors 类的 toMap()方法转为 Map 集合时，一定要使用含有参数类型为 BinaryOperator，参数名为 mergeFunction 的方法，否则当出现相同 key值时会抛IllegalStateException 异常
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//MethodCall[pmd-java:matchesSig('java.util.stream.Collectors#toMap(_,_)')]
+]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+        <![CDATA[
+             List<Pair<String, Double>> pairArrayList = new ArrayList<>(3);
+        pairArrayList.add(new MutablePair<>("version", 6.19));
+        pairArrayList.add(new MutablePair<>("version", 10.24));
+        pairArrayList.add(new MutablePair<>("version", 13.14));
+
+        // 正例 生成的 map 集合中只有一个键值对：{version=13.14}
+        Map<String, Double> map1 = pairArrayList.stream().collect(
+                Collectors.toMap(Pair::getKey, Pair::getValue, (v1, v2) -> v2));
+        //  反例： java.lang.IllegalStateException: Duplicate key version
+        map1 = pairArrayList.stream().collect(
+                Collectors.toMap(Pair::getKey, Pair::getValue));
+        ]]>
+        </example>
+    </rule>
+
+
 </ruleset>

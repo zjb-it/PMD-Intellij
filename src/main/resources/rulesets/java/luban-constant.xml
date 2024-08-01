@@ -30,7 +30,9 @@
         </description>
         <priority>3</priority>
         <example>
+            <![CDATA[
             反例：if (空格 a == b 空格)
+            ]]>
         </example>
     </rule>
 

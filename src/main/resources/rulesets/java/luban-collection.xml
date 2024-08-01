@@ -25,5 +25,36 @@
     </rule>
 
 
+    <rule name="AvoidUseCollectionSizeRule"
+          language="java"
+          message="{0}判断所有集合内部的元素是否为空，使用 isEmpty()方法，而不是 size()==0 的方式"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            （二）【强制】判断所有集合内部的元素是否为空，使用 isEmpty()方法，而不是 size()==0 的方式
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//InfixExpression[@Operator = "=="][NumericLiteral[@Image="0"] and (.//MethodCall[pmd-java:matchesSig("java.util.Collection#size()")]
+ or .//MethodCall[pmd-java:matchesSig("java.util.Map#size()")])]
+
+]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+        <![CDATA[
+            说明：前者的时间复杂度为 O(1)，而且可读性更好。
+            正例：
+            Map<String, Object> map = new HashMap<>();
+            if(map.isEmpty()) {
+            System.out.println("no element in this map.");
+            }
+        ]]>
+        </example>
+    </rule>
+
 
 </ruleset>

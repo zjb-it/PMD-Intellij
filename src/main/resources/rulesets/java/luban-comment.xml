@@ -16,9 +16,11 @@
         </description>
         <priority>3</priority>
         <example>
+            <![CDATA[
             正例：
             // 这是示例注释，请注意在双斜线之后有一个空格
             String commentString = new String();
+            ]]>
         </example>
     </rule>
 
@@ -31,6 +33,7 @@
         </description>
         <priority>3</priority>
         <example>
+            <![CDATA[
             正例：
             正例：
             /**
@@ -42,6 +45,7 @@
             public int test1（String test）{
             ... ...
             }
+            ]]>
         </example>
     </rule>
 

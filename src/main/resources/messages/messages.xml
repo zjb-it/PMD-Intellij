@@ -94,6 +94,10 @@
         <![CDATA[ 【{0}】不符合规则 ,1.只要重写 equals，就必须重写 hashCode；]]>
     </entry>
 
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.collection.MapSetKeyMustEqualsHashCodeRule.violation.msg">
+        <![CDATA[ 【{0}】不符合规则 ,1.只要重写 equals，就必须重写 hashCode；]]>
+    </entry>
+
 
     <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.AbstractClassShouldStartWithAbstractNamingRule.violation.msg">
         <![CDATA[抽象类 【{0}】 命名应以Abstract或Base开头]]>

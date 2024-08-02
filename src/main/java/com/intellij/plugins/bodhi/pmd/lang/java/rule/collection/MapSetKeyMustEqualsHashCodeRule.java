@@ -1,16 +1,15 @@
 package com.intellij.plugins.bodhi.pmd.lang.java.rule.collection;
 
 import com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.AbstractLuBanRule;
-import net.sourceforge.pmd.lang.ast.NodeStream;
-import net.sourceforge.pmd.lang.java.ast.*;
-import net.sourceforge.pmd.lang.java.ast.internal.JavaAstUtils;
-import net.sourceforge.pmd.lang.java.rule.internal.JavaRuleUtil;
+import net.sourceforge.pmd.lang.java.ast.ASTClassType;
+import net.sourceforge.pmd.lang.java.ast.ASTType;
+import net.sourceforge.pmd.lang.java.ast.ASTTypeArguments;
+import net.sourceforge.pmd.lang.java.ast.ASTVariableDeclarator;
 import net.sourceforge.pmd.lang.java.types.TypeTestUtil;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class MapSetKeyMustEqualsHashCodeRule extends AbstractLuBanRule {
     public MapSetKeyMustEqualsHashCodeRule() {

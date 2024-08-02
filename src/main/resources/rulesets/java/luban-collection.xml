@@ -168,4 +168,30 @@
     </rule>
 
 
+    <rule name="CollectionAddAllMustNotNullRule"
+          language="java"
+          message="（十）【强制】在使用 Collection 接口任何实现类的 addAll()方法时都要对输入的集合参数进行 NPE 判断。"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            说明：在 ArrayList#addAll 方法的第一行代码即 Object[] a = c.toArray(); 其中 c 为输入集合参数，如果为 null，则直接抛出异常。
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//MethodCall[pmd-java:matchesSig('java.util.Collection#addAll(_)') and
+not(
+./VariableAccess/@Name = ..//parent::Block/parent::IfStatement/InfixExpression[@Operator = '!='][NullLiteral]/VariableAccess/@Name
+or ./VariableAccess/@Name =..//parent::Block/parent::IfStatement/MethodCall[@MethodName="nonNull"]/ArgumentList/VariableAccess/@Name
+or ./VariableAccess/@Name =..//parent::Block/parent::IfStatement/MethodCall[@MethodName="isNotNull"]/ArgumentList/VariableAccess/@Name
+)
+]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+
 </ruleset>

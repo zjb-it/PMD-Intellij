@@ -91,5 +91,48 @@
         </example>
     </rule>
 
+    <rule name="ConcurrentExceptionWithModifyOriginSubListRule"
+          language="java"
+          message="{0}"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            【强制】在 subList 场景高度注意对父集合元素的增加或删除均会导致子列表的遍历、增加、删除产生 ConcurrentModificationException 异常。
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+
+//LocalVariableDeclaration[
+    .//MethodCall[pmd-java:matchesSig('java.util.List#subList(int,int)')]/VariableAccess/@Name=
+        ./following-sibling::*//MethodCall[@MethodName='add' or @MethodName='remove' or @MethodName='clear']/VariableAccess/@Name
+]
+]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+<![CDATA[
+    private static void concurrentModify() {
+        List<Pair<String, Double>> pairArrayList = new ArrayList<>(3);
+        pairArrayList.add(new MutablePair<>("version", 6.19));
+        pairArrayList.add(new MutablePair<>("version", 10.24));
+        pairArrayList.add(new MutablePair<>("version", 13.14));
+
+        List<Pair<String, Double>> pairs = pairArrayList.subList(0, 1);
+// 上一步用了 pairArrayList.subList ,此时调用 pairArrayList.clear方法，下面操作pairs时会抛出ConcurrentModifyException
+        pairArrayList.clear();
+//        pairArrayList.add(null);
+//        pairArrayList.remove(1);
+
+        System.out.println(pairs.size());
+
+    }
+]]>
+        </example>
+    </rule>
+
+
 
 </ruleset>

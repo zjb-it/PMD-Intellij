@@ -194,4 +194,41 @@ or ./VariableAccess/@Name =..//parent::Block/parent::IfStatement/MethodCall[@Met
     </rule>
 
 
+    <rule name="AsListNotAddRule"
+          language="java"
+          message="【强制】使用工具类 Arrays.asList()把数组转换成集合时，不能使用其修改集合相关的方法，它的 add/remove/clear 方法会抛出 UnsupportedOperationException 异常"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            （十一）【强制】使用工具类 Arrays.asList()把数组转换成集合时，不能使用其修改集合相关的方法，它的 add/remove/clear 方法会抛出 UnsupportedOperationException 异常
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//MethodCall[pmd-java:matchesSig('java.util.Arrays#asList(_)')]
+/parent::VariableDeclarator[@Name= ./../following-sibling::*//MethodCall[@MethodName='add' or @MethodName='remove' or @MethodName='clear']/VariableAccess/@Name]
+]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+<![CDATA[
+    public static void main(String[] args) {
+        String[] str = new String[] { "yang", "hao" };
+        List list = Arrays.asList(str);
+//        异常：java.lang.UnsupportedOperationException
+        list.add("1");
+        if (!list.isEmpty()) {
+            //        异常：java.lang.UnsupportedOperationException
+            list.add("2");
+        }
+    }
+]]>
+
+        </example>
+    </rule>
+
+
+
 </ruleset>

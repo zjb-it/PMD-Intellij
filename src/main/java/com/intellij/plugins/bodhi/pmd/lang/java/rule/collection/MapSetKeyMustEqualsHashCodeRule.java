@@ -10,6 +10,7 @@ import net.sourceforge.pmd.lang.java.types.TypeTestUtil;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class MapSetKeyMustEqualsHashCodeRule extends AbstractLuBanRule {
     public MapSetKeyMustEqualsHashCodeRule() {
@@ -20,9 +21,9 @@ public class MapSetKeyMustEqualsHashCodeRule extends AbstractLuBanRule {
     @Override
     public Object visit(ASTVariableDeclarator node, Object data) {
         ASTType typeNode = node.getVarId().getTypeNode();
-        if (TypeTestUtil.isA(Collection.class, typeNode) || TypeTestUtil.isA(Map.class, typeNode)) {
+        if (TypeTestUtil.isA(Set.class, typeNode) || TypeTestUtil.isA(Map.class, typeNode)) {
             ASTClassType classType = typeNode.children(ASTTypeArguments.class).children(ASTClassType.class).first();
-            if (!classType.getTypeMirror().unbox().isPrimitive()) {
+            if (Objects.nonNull(classType) && !classType.getTypeMirror().unbox().isPrimitive()) {
                 long count = classType.getTypeMirror()
                         .streamMethods(method -> Objects.equals(method.getSimpleName(), "hashCode")
                                 || Objects.equals(method.getSimpleName(), "equals"))

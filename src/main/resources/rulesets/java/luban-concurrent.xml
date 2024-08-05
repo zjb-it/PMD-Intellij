@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<ruleset name="LuBanConcurrent" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>LuBanConcurrent</description>
+
+    <rule name="DoubleCheckedLockingRule"
+          language="java"
+          message="（一）【强制】获取单例对象需要保证线程安全，其中的方法也要保证线程安全。 "
+          class="net.sourceforge.pmd.lang.java.rule.multithreading.DoubleCheckedLockingRule">
+        <description>
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+           public class Foo {
+    /*volatile */ Object baz = null; // fix for Java5 and later: volatile
+    Object bar() {
+        if (baz == null) { // baz may be non-null yet not fully created
+            synchronized(this) {
+                if (baz == null) {
+                    baz = new Object();
+                }
+              }
+        }
+        return baz;
+    }
+}
+                 ]]>
+        </example>
+    </rule>
+
+
+
+</ruleset>

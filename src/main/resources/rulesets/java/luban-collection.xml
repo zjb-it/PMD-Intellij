@@ -263,6 +263,24 @@ or ./VariableAccess/@Name =..//parent::Block/parent::IfStatement/MethodCall[@Met
         </example>
     </rule>
 
+    <rule name="AvoidForEachRemoveRule"
+          language="java"
+          message="For循环中严禁remove,会报异常 ConcurrentModificationException"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            For循环中严禁remove,会报异常 ConcurrentModificationException
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//ForeachStatement[VariableAccess/@Name=//MethodCall[pmd-java:matchesSig('java.util.Collection#remove(_)')]/VariableAccess/@Name]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
 
 
 </ruleset>

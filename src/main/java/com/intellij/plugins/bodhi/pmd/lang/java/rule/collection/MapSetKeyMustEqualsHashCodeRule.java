@@ -7,7 +7,6 @@ import net.sourceforge.pmd.lang.java.ast.ASTTypeArguments;
 import net.sourceforge.pmd.lang.java.ast.ASTVariableDeclarator;
 import net.sourceforge.pmd.lang.java.types.TypeTestUtil;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;

@@ -230,5 +230,39 @@ or ./VariableAccess/@Name =..//parent::Block/parent::IfStatement/MethodCall[@Met
     </rule>
 
 
+    <rule name="CollectionShouldGenericRule"
+          language="java"
+          message="需要指定泛型"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            需要指定泛型
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//ClassType[pmd-java:typeIsExactly('java.util.List')][not(TypeArguments)]
+| //ClassType[pmd-java:typeIsExactly('java.util.Set')][not(TypeArguments)]
+| //ClassType[pmd-java:typeIsExactly('java.util.Collection')][not(TypeArguments)]
+| //ClassType[pmd-java:typeIsExactly('java.util.Map')][not(TypeArguments)]
+| //ClassType[pmd-java:typeIsExactly('java.util.HashMap')][not(TypeArguments)]
+| //ClassType[pmd-java:typeIsExactly('java.util.Map')][not(TypeArguments)]
+| //ClassType[pmd-java:typeIsExactly('java.util.concurrent.ConcurrentHashMap')][not(TypeArguments)]
+]]>
+                </value>
+            </property>
+        </properties>
+        <example>
+<![CDATA[
+    反例：
+   List list = new ArrayList<>();
+    Map map = new HashMap<>();
+]]>
+
+        </example>
+    </rule>
+
+
 
 </ruleset>

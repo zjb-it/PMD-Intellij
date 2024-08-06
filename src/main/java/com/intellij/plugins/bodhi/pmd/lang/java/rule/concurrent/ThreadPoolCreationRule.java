@@ -22,6 +22,6 @@ public class ThreadPoolCreationRule extends AbstractLuBanRule {
                 addViolation(data,node,node.getMethodName());
             }
         }
-        return super.visit(node, data);
+        return data;
     }
 }

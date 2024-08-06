@@ -31,55 +31,55 @@
         </example>
     </rule>
 
-<!--    <rule name="ThreadPoolCreationRule"-->
-<!--          language="java"-->
-<!--          since="1.6"-->
-<!--          message="java.concurrent.ThreadPoolCreationRule.rule.msg"-->
-<!--          class="com.xenoamess.p3c.pmd.lang.java.rule.concurrent.ThreadPoolCreationRule">-->
-<!--        <description>java.concurrent.ThreadPoolCreationRule.rule.desc</description>-->
-<!--        <priority>1</priority>-->
-<!--        <example>-->
-<!--            <![CDATA[-->
-<!--Positive example 1：-->
-<!--    //org.apache.commons.lang3.concurrent.BasicThreadFactory-->
-<!--    ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(1,-->
-<!--        new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());-->
-<!--       ]]>-->
-<!--        </example>-->
-<!--        <example>-->
-<!--            <![CDATA[-->
-<!--Positive example 2：-->
-<!--    ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()-->
-<!--        .setNameFormat("demo-pool-%d").build();-->
+    <rule name="ThreadPoolCreationRule"
+          language="java"
+          since="1.6"
+          message=""
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.concurrent.ThreadPoolCreationRule">
+        <description>java.concurrent.ThreadPoolCreationRule.rule.desc</description>
+        <priority>1</priority>
+        <example>
+            <![CDATA[
+示例 1：
+    //org.apache.commons.lang3.concurrent.BasicThreadFactory
+    ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(1,
+        new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());
+       ]]>
+        </example>
+        <example>
+            <![CDATA[
+示例 2：
+    ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+        .setNameFormat("demo-pool-%d").build();
 
-<!--    //Common Thread Pool-->
-<!--    ExecutorService pool = new ThreadPoolExecutor(5, 200,-->
-<!--        0L, TimeUnit.MILLISECONDS,-->
-<!--        new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());-->
+    //Common Thread Pool
+    ExecutorService pool = new ThreadPoolExecutor(5, 200,
+        0L, TimeUnit.MILLISECONDS,
+        new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
 
-<!--    pool.execute(()-> System.out.println(Thread.currentThread().getName()));-->
-<!--    pool.shutdown();//gracefully shutdown-->
-<!--       ]]>-->
-<!--        </example>-->
-<!--        <example>-->
-<!--            <![CDATA[-->
-<!--Positive example 3：-->
-<!--    <bean id="userThreadPool"-->
-<!--        class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">-->
-<!--        <property name="corePoolSize" value="10" />-->
-<!--        <property name="maxPoolSize" value="100" />-->
-<!--        <property name="queueCapacity" value="2000" />-->
+    pool.execute(()-> System.out.println(Thread.currentThread().getName()));
+    pool.shutdown();//gracefully shutdown
+       ]]>
+        </example>
+        <example>
+            <![CDATA[
+示例 3：
+    <bean id="userThreadPool"
+        class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="10" />
+        <property name="maxPoolSize" value="100" />
+        <property name="queueCapacity" value="2000" />
 
-<!--    <property name="threadFactory" value= threadFactory />-->
-<!--        <property name="rejectedExecutionHandler">-->
-<!--            <ref local="rejectedExecutionHandler" />-->
-<!--        </property>-->
-<!--    </bean>-->
-<!--    //in code-->
-<!--    userThreadPool.execute(thread);-->
-<!--       ]]>-->
-<!--        </example>-->
-<!--    </rule>-->
+    <property name="threadFactory" value= threadFactory />
+        <property name="rejectedExecutionHandler">
+            <ref local="rejectedExecutionHandler" />
+        </property>
+    </bean>
+    //in code
+    userThreadPool.execute(thread);
+       ]]>
+        </example>
+    </rule>
 
     <rule name="AvoidCreateThreadRule"
           language="java"

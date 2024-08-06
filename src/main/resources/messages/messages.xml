@@ -99,6 +99,9 @@
     </entry>
 
 
+    <entry key="com.intellij.plugins.bodhi.pmd.lang.java.rule.concurrent.ThreadPoolCreationRule.violation.msg">
+        <![CDATA[ 【{0}】不符合规则 ,（四）【强制】线程池不允许使用 Executors 去创建ThreadPoolExecutor ]]>
+    </entry>
 
 
 

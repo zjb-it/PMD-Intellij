@@ -40,7 +40,7 @@
     <externalAnnotator
             language="JAVA"
             implementationClass="com.intellij.plugins.bodhi.pmd.annotator.PMDExternalAnnotator"/>
-    <annotator language="JAVA" implementationClass="com.intellij.plugins.bodhi.pmd.annotator.SimpleAnnotator"/>
+<!--    <annotator language="JAVA" implementationClass="com.intellij.plugins.bodhi.pmd.annotator.SimpleAnnotator"/>-->
 
   </extensions>
   <applicationListeners>

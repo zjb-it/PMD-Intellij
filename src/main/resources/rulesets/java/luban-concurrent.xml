@@ -199,4 +199,24 @@ not(./parent::VariableDeclarator/VariableId/@Name=..//parent::LocalVariableDecla
     </rule>
 
 
+    <rule name="AvoidUseTimerRule"
+          language="java"
+          message="不能使用Timer"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            （十一）【建议】多线程并行处理定时任务时Timer 运行多个 TimeTask 时，只要其中之一没有捕获抛出的异常，其它任务便会自动终止运行，使用 ScheduledExecutorService 则没有这个问题。
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//ConstructorCall[ClassType[pmd-java:typeIs('java.util.Timer')]]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+
 </ruleset>

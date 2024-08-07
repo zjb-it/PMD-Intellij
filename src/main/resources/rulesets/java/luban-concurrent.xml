@@ -160,6 +160,43 @@
         </example>
     </rule>
 
+    <rule name="TryLockMustDetermineResultRule"
+          language="java"
+          message="（九）【强制】在使用尝试机制来获取锁的方式中，进入业务代码块之前必须先判断当前线程是否持有锁。锁的释放规则与锁的阻塞等待方式相同"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            说明：Lock 对象的 unlock 方法在执行时，它会调用 AQS 的 tryRelease 方法（取决于具体实现类），如果当前线程不持有锁，则抛出 IllegalMonitorStateException 异常。
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//MethodCall[pmd-java:matchesSig("java.util.concurrent.locks.Lock#tryLock()") and
+not(./parent::VariableDeclarator/VariableId/@Name=..//parent::LocalVariableDeclaration/following-sibling::IfStatement/VariableAccess/@Name)]
+]]>
+                </value>
+            </property>
+        </properties>
+
+        <example>
+            <![CDATA[
+    //        正例：
+            Lock lock = new XxxLock();
+    // ...
+            boolean isLocked = lock.tryLock();
+    //        需要判断 tryLock结果
+            if (isLocked) {
+                try {
+                    doSomething();
+                    doOthers();
+                } finally {
+                    lock.unlock();
+                }
+            }
+        ]]>
+        </example>
+    </rule>
 
 
 </ruleset>

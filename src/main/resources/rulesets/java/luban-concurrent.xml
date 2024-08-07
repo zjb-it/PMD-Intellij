@@ -218,6 +218,7 @@ not(./parent::VariableDeclarator/VariableId/@Name=..//parent::LocalVariableDecla
         </properties>
         <example>
             <![CDATA[
+    // 正例
     //org.apache.commons.lang3.concurrent.BasicThreadFactory
     ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(1,
         new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<ruleset name="LuBanBase" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>LuBanBase</description>
+
+    <rule name="WrapRule"
+          language="java"
+          message="（九）【建议】单行字符数限制不超过 120 个，超出需要换行"
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.base.WrapRule">
+        <description>
+            （九）【建议】单行字符数限制不超过 120 个，超出需要换行，
+            1.第二行相对第一行缩进 4 个空格，从第三行开始，不再继续缩进，参考示例；
+            2.运算符与下文一起换行；
+            3.方法调用的点符号与下文一起换行；
+            4.方法调用中的多个参数需要换行时，在逗号后进行；
+            5.在括号前不要换行，见反例。
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+//        正例：
+        StringBuilder sb = new StringBuilder();
+// 超过 120 个字符的情况下，换行缩进 4 个空格，并且方法前的点号一起换行
+        sb.append("zi").append("xin")
+                .append("huang")
+                .append("huang")
+                .append("huang");
+//        反例：
+        StringBuilder sb = new StringBuilder();
+// 超过 120 个字符的情况下，不要在括号前换行
+        sb.append("you").append("are").append
+                ("lucky");
+// 参数很多的方法调用可能超过 120 个字符，逗号后才是换行处
+        method(args1, args2, args3, ...
+,argsX);
+
+                 ]]>
+        </example>
+    </rule>
+
+
+
+</ruleset>

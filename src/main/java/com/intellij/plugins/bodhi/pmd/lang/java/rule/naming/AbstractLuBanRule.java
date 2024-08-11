@@ -100,7 +100,7 @@ public abstract class AbstractLuBanRule extends AbstractJavaRulechainRule {
         if (MESSAGES_BUNDLE.containsKey(key)) {
             return MESSAGES_BUNDLE.getString(key);
         }
-        return "未配置message";
+        return "";
     }
 
     public static @NotNull String getMessage(AbstractRule abstractJavaRule) {

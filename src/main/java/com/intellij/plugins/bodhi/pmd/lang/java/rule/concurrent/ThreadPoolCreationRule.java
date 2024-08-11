@@ -10,7 +10,8 @@ import java.util.concurrent.Executors;
 
 public class ThreadPoolCreationRule extends AbstractLuBanRule {
 
-    private static final Set<String> CHECK_METHOD_NAME = Set.of("newFixedThreadPool","newCachedThreadPool","newSingleThreadExecutor");
+    private static final Set<String> CHECK_METHOD_NAME = Set.of("newFixedThreadPool","newCachedThreadPool",
+            "newSingleThreadExecutor");
     public ThreadPoolCreationRule() {
         super(ASTMethodCall.class);
     }

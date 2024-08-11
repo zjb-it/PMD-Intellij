@@ -21,7 +21,8 @@ public class EndLineCommentMustHaveOneWhitespaceRule extends AbstractLuBanRule {
             if (comment.isSingleLine()) {
                 Chars commentText = comment.getText();
                 Chars text = commentText.removePrefix("//");
-                if (text.startsWith("  ")) {
+                // 有且仅有一个空格
+                if (text.trimStart().length() + 1 != text.length()) {
                     FileLocation reportLocation = comment.getReportLocation();
                     asCtx(data).addViolationWithPosition(node, reportLocation.getStartLine(), reportLocation.getEndLine(), getMessage(),commentText);
                 }
@@ -29,5 +30,10 @@ public class EndLineCommentMustHaveOneWhitespaceRule extends AbstractLuBanRule {
             }
         }
         return super.visit(node, data);
+    }
+
+    public static void main(String[] args) {
+        Chars wrap = Chars.wrap("  123  ");
+        System.out.println(wrap.trimStart().length());
     }
 }

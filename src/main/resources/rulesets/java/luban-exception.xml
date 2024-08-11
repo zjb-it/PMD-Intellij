@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<ruleset name="LuBanException" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>LuBanException</description>
+
+    <rule name="MustNotThrowExceptionRule"
+          language="java"
+          message="【强制】禁止throw Exception，要求必须细化到具体的异常类，比如BizException，或更细化的异常类."
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//ThrowStatement[./ConstructorCall[ClassType[pmd-java:typeIsExactly('java.lang.Exception')] or ClassType[pmd-java:typeIsExactly('java.lang.RuntimeException')]]]
+|
+//ThrowStatement[./VariableAccess[pmd-java:typeIsExactly('java.lang.Exception') or pmd-java:typeIsExactly('java.lang.RuntimeException')]]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <rule name="AvoidPrintStackTraceRule"
+          language="java"
+          message="printStackTrace不能输出到日志文件"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            使用log.error()
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//MethodCall[ pmd-java:matchesSig("java.lang.Throwable#printStackTrace()") ]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <rule name="MustLogErrorRule"
+          language="java"
+          message="需要记录打印错误日志"
+          class="net.sourceforge.pmd.lang.rule.xpath.XPathRule">
+        <description>
+            需要log.error()
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+//CatchClause[not(.//MethodCall[pmd-java:matchesSig('org.slf4j.Logger#error(_)')])
+and not(.//MethodCall[pmd-java:matchesSig('org.slf4j.Logger#error(_,_)')])
+and not(.//MethodCall[pmd-java:matchesSig('org.slf4j.Logger#error(_,_,_)')])
+]
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+
+
+</ruleset>

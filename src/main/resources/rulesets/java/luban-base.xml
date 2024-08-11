@@ -40,6 +40,22 @@
         </example>
     </rule>
 
+    <rule name="ParameterShouldHavingBlankRule"
+          language="java"
+          message=""
+          class="com.intellij.plugins.bodhi.pmd.lang.java.rule.base.ParameterShouldHavingBlankRule">
+        <description>
+            【建议】方法参数在定义和传入时，多个参数逗号后边必须加空格。
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+正例：
+下例中实参的 args1，后边必须要有一个空格。
+method(args1, args2, args3);
 
+                 ]]>
+        </example>
+    </rule>
 
 </ruleset>

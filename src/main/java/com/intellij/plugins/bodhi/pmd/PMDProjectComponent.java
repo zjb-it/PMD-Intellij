@@ -21,6 +21,7 @@ import com.intellij.plugins.bodhi.pmd.core.PMDResultCollector;
 import com.intellij.plugins.bodhi.pmd.lang.java.rule.naming.AbstractLuBanRule;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -74,6 +75,8 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
     private Set<String> inEditorAnnotationRuleSets = new LinkedHashSet<>(); // avoid duplicates, maintain order
     private List<String> deletedRuleSetPaths = Collections.emptyList();
     public static final String CUSTOM_RULESETS_PROPERTY_FILE = "rulesets/ruleset.properties";
+
+    private Integer autoPullInterval;
     /**
      * Creates a PMD Project component based on the project given.
      *
@@ -344,6 +347,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
         for (String item : inEditorAnnotationRuleSets) {
             persistentData.getInEditorAnnotationRules().add(item);
         }
+        persistentData.setAutoPullInterval(this.autoPullInterval);
         return persistentData;
     }
 
@@ -363,7 +367,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
                 optionToValue.put(ConfigOption.fromKey(key), state.getOptionKeyToValue().get(key));
             }
         }
-
+        this.autoPullInterval = state.getAutoPullInterval();
         inEditorAnnotationRuleSets.clear();
         inEditorAnnotationRuleSets.addAll(state.getInEditorAnnotationRules());
 
@@ -387,5 +391,14 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
         return scanFilesBeforeCheckin;
     }
 
+    public Integer getAutoPullInterval() {
+        return autoPullInterval;
+    }
 
+    public void setAutoPullInterval(String autoPullInterval) {
+        if (StringUtils.isBlank(autoPullInterval)) {
+            autoPullInterval = "60";
+        }
+        this.autoPullInterval = Integer.parseInt(autoPullInterval);
+    }
 }

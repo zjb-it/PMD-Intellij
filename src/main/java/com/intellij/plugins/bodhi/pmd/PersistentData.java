@@ -12,6 +12,7 @@ public class PersistentData {
     private boolean skipTestSources = DEFAULT_SKIP_TEST_SRC;
     private boolean scanFilesBeforeCheckin;
     private List<String> inEditorAnnotationRules;
+    private Integer autoPullInterval = 60;
 
 
     public PersistentData() {
@@ -59,4 +60,11 @@ public class PersistentData {
         scanFilesBeforeCheckin = scan;
     }
 
+    public Integer getAutoPullInterval() {
+        return autoPullInterval;
+    }
+
+    public void setAutoPullInterval(Integer autoPullInterval) {
+        this.autoPullInterval = autoPullInterval;
+    }
 }

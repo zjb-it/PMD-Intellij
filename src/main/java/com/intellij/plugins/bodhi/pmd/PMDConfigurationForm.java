@@ -11,19 +11,23 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.plugins.bodhi.pmd.actions.AnEDTAction;
 import com.intellij.plugins.bodhi.pmd.core.PMDJsonExportingRenderer;
 import com.intellij.plugins.bodhi.pmd.core.PMDResultCollector;
+import com.intellij.ui.DocumentAdapter;
 import com.intellij.util.PlatformIcons;
 import net.sourceforge.pmd.lang.Language;
 import net.sourceforge.pmd.lang.LanguageRegistry;
 import net.sourceforge.pmd.lang.LanguageVersion;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -49,15 +53,18 @@ public class PMDConfigurationForm {
     private JPanel mainPanel;
     private JCheckBox skipTestsCheckBox;
     private JList<String> inEditorAnnotationRuleSets;
+    private JTextField autoPullInterval;
+    private JPanel gitPanel;
     private final List<String> deletedRuleSetPaths = new ArrayList<>();
     private boolean isModified;
     private final Project project;
     private Map<String, String> validKnownCustomRules;
+    private static final String NUMBER_KEY = "0123456789";
 
     private static final List<String> columnNames = List.of("Option", "Value");
     private static final String STAT_URL_MSG_SUCCESS = "Connection success; will use Statistics URL to export anonymous usage statistics";
 
-    public PMDConfigurationForm(final Project project,final PMDProjectComponent component) {
+    public PMDConfigurationForm(final Project project, final PMDProjectComponent component) {
         this.project = project;
         //Get the action group defined
         DefaultActionGroup actionGroup = (DefaultActionGroup) ActionManager.getInstance().getAction("PMDSettingsEdit");
@@ -72,6 +79,20 @@ public class PMDConfigurationForm {
         toolbar.getComponent().setVisible(true);
         buttonPanel.setLayout(new BorderLayout());
         buttonPanel.add(toolbar.getComponent(), BorderLayout.CENTER);
+        autoPullInterval.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (NUMBER_KEY.indexOf(e.getKeyChar()) < 0) {
+                    e.consume();//如果不是数字则取消
+                }
+            }
+        });
+        autoPullInterval.getDocument().addDocumentListener(new DocumentAdapter() {
+            @Override
+            protected void textChanged(@NotNull DocumentEvent e) {
+                isModified = true;
+            }
+        });
 
         optionsTable.putClientProperty("terminateEditOnFocusLost", true); // fixes issue #45
         ruleSetPathJList.setModel(new RuleSetListModel(new ArrayList<>()));
@@ -84,6 +105,7 @@ public class PMDConfigurationForm {
 
     /**
      * Returns the rootpanel
+     *
      * @return the root panel
      */
     public JPanel getRootPanel() {
@@ -92,13 +114,14 @@ public class PMDConfigurationForm {
 
     /**
      * Populate the UI from the list.
+     *
      * @param dataProjComp the data provider
      */
     public void setDataOnUI(PMDProjectComponent dataProjComp) {
         List<String> customRuleSetPaths = dataProjComp.getCustomRuleSetPaths();
         Set<String> defaultCustomRuleSetPaths = dataProjComp.getDefaultCustomRuleSetPaths();
         RuleSetListModel ruleSetListModel = new RuleSetListModel(customRuleSetPaths);
-        ruleSetPathJList.setCellRenderer(new DefaultListCellRenderer(){
+        ruleSetPathJList.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
@@ -119,11 +142,11 @@ public class PMDConfigurationForm {
                 optionDescsDefaultValues[i][1] = option.getDefaultValue();
             }
             optionsTable.setModel(new MyTableModel(optionDescsDefaultValues, columnNames.toArray()));
-        }
-        else {
+        } else {
             optionsTable.setModel(new MyTableModel(toDescValueArray2d(dataProjComp.getOptionToValue()), columnNames.toArray()));
         }
         skipTestsCheckBox.setSelected(dataProjComp.isSkipTestSources());
+        autoPullInterval.setText(dataProjComp.getAutoPullInterval() + "");
 
         Properties props = new Properties();
         try {
@@ -153,6 +176,7 @@ public class PMDConfigurationForm {
 
     /**
      * Get the data from ui and return.
+     *
      * @param dataProjComp the data provider
      */
     public void getDataFromUi(PMDProjectComponent dataProjComp) {
@@ -160,6 +184,7 @@ public class PMDConfigurationForm {
         dataProjComp.setDeletedRuleSetPaths(deletedRuleSetPaths);
         dataProjComp.setOptionToValue(toOptionToValue(optionsTable.getModel()));
         dataProjComp.skipTestSources(skipTestsCheckBox.isSelected());
+        dataProjComp.setAutoPullInterval(autoPullInterval.getText());
         dataProjComp.setInEditorAnnotationRuleSets(inEditorAnnotationRuleSets.getSelectedValuesList());
 
         isModified = false;
@@ -168,14 +193,15 @@ public class PMDConfigurationForm {
     private Map<ConfigOption, String> toOptionToValue(TableModel tm) {
         Map<ConfigOption, String> optionToValue = new EnumMap<>(ConfigOption.class);
         for (int i = 0; i < tm.getRowCount(); i++) {
-            ConfigOption option = ConfigOption.fromDescription((String)tm.getValueAt(i, 0));
-            optionToValue.put(option, (String) tm.getValueAt(i,1));
+            ConfigOption option = ConfigOption.fromDescription((String) tm.getValueAt(i, 0));
+            optionToValue.put(option, (String) tm.getValueAt(i, 1));
         }
         return optionToValue;
     }
 
     /**
      * To detect if the ui is modified or not.
+     *
      * @param data the data provider
      * @return true if modified false otherwise
      */
@@ -239,6 +265,10 @@ public class PMDConfigurationForm {
         }
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
+
     /**
      * Inner class for 'Add' action
      */
@@ -259,6 +289,7 @@ public class PMDConfigurationForm {
      */
     private class EditRuleSetAction extends AnEDTAction {
         private PMDProjectComponent component;
+
         public EditRuleSetAction(String text, String description, Icon icon, PMDProjectComponent component) {
             super(text, description, icon);
             this.component = component;
@@ -274,7 +305,7 @@ public class PMDConfigurationForm {
             super.update(e);
             if (component.getDefaultCustomRuleSetPaths().contains(ruleSetPathJList.getSelectedValue())) {
                 e.getPresentation().setEnabled(false);
-            }else{
+            } else {
                 e.getPresentation().setEnabled(!ruleSetPathJList.getSelectionModel().isSelectionEmpty());
             }
         }
@@ -286,6 +317,7 @@ public class PMDConfigurationForm {
      */
     private class DeleteRuleSetAction extends AnEDTAction {
         private PMDProjectComponent component;
+
         public DeleteRuleSetAction(String text, String description, Icon icon, PMDProjectComponent component) {
             super(text, description, icon);
             this.component = component;
@@ -309,7 +341,7 @@ public class PMDConfigurationForm {
             super.update(e);
             if (component.getDefaultCustomRuleSetPaths().contains(ruleSetPathJList.getSelectedValue())) {
                 e.getPresentation().setEnabled(false);
-            }else{
+            } else {
                 e.getPresentation().setEnabled(ruleSetPathJList.getSelectedIndex() != -1);
             }
         }
@@ -331,14 +363,17 @@ public class PMDConfigurationForm {
             isModified = isModified || orig == null || !orig.equals(aValue);
             switch (row) {
                 // row 0: Target JDK
-                case 0: validateJavaVersion((String) aValue, row, column, orig, origIsMod);
-                break;
+                case 0:
+                    validateJavaVersion((String) aValue, row, column, orig, origIsMod);
+                    break;
                 // row 1: statistics URL
-                case 1: validateStatUrl((String) aValue, row, column, orig, origIsMod);
-                break;
+                case 1:
+                    validateStatUrl((String) aValue, row, column, orig, origIsMod);
+                    break;
                 // row 2: threads
-                case 2: validateThreads((String) aValue, row, column, orig, origIsMod);
-                break;
+                case 2:
+                    validateThreads((String) aValue, row, column, orig, origIsMod);
+                    break;
             }
         }
 
@@ -351,8 +386,7 @@ public class PMDConfigurationForm {
             if (isRegistered) {
                 String registeredVersion = java.getVersion(versionInput).getVersion();
                 optionsTable.setToolTipText("Java version " + registeredVersion);
-            }
-            else {
+            } else {
                 super.setValueAt(orig, row, column);
                 List<LanguageVersion> langVersions = java.getVersions();
                 List<String> versions = new ArrayList<>();
@@ -381,16 +415,14 @@ public class PMDConfigurationForm {
                     optionsTable.setToolTipText("Previous input - Invalid URL: '" + urlInput + "'");
                     super.setValueAt(orig, row, column);
                     isModified = origIsMod;
-                }
-                else {
+                } else {
                     String content = "{\"test connection\"}\n";
                     String exportMsg = PMDJsonExportingRenderer.tryJsonExport(content, urlInput);
                     if (!exportMsg.isEmpty()) {
                         optionsTable.setToolTipText("Previous input - Failure for '" + urlInput + "': " + exportMsg);
                         super.setValueAt(orig, row, column);
                         isModified = origIsMod;
-                    }
-                    else {
+                    } else {
                         isModified = true;
                         optionsTable.setToolTipText(STAT_URL_MSG_SUCCESS);
                     }
@@ -413,8 +445,7 @@ public class PMDConfigurationForm {
             }
             if (ok) {
                 optionsTable.setToolTipText(threadsInput + " threads");
-            }
-            else {
+            } else {
                 super.setValueAt(orig, row, column);
                 optionsTable.setToolTipText("Must be an positive integer less than or equal to " + PMDUtil.AVAILABLE_PROCESSORS);
                 isModified = origIsMod;
@@ -504,8 +535,7 @@ public class PMDConfigurationForm {
             Set<String> ruleSetNames = PMDUtil.getValidKnownCustomRules().keySet();
             if (ruleSetNames.isEmpty()) {
                 elements.add("Warn: No pmd7 compatible ruleset found, revert to plugin version 1.9.x");
-            }
-            else {
+            } else {
                 for (String ruleSetName : ruleSetNames) {
                     elements.add(ruleSetName);
                 }
@@ -552,10 +582,8 @@ public class PMDConfigurationForm {
         }
     }
 
-    private class CheckBoxChangeListener implements ChangeListener
-    {
-        public void stateChanged(ChangeEvent e)
-        {
+    private class CheckBoxChangeListener implements ChangeListener {
+        public void stateChanged(ChangeEvent e) {
             isModified = true;
         }
     }

@@ -1,5 +1,6 @@
 package com.intellij.plugins.bodhi.pmd;
 
+import com.intellij.AbstractBundle;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.ActionGroup;
 import com.intellij.openapi.actionSystem.ActionManager;
@@ -26,8 +27,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.intellij.plugins.bodhi.pmd.handlers.PMDCheckinHandler.BUNDLE;
+
 /**
- *
  * This is the Project Component of the PMD Plugin.
  *
  * @author bodhi
@@ -35,11 +37,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 
 @State(
-  name = "PDMPlugin",
-  storages = {
-    @Storage(
-      value = "$PROJECT_FILE$"
-    )}
+        name = "PDMPlugin",
+        storages = {
+                @Storage(
+                        value = "$PROJECT_FILE$"
+                )}
 )
 public class PMDProjectComponent implements ProjectComponent, PersistentStateComponent<PersistentData>, Disposable {
 
@@ -49,6 +51,8 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
     public static final String TOOL_ID = "PMD";
 
     private static final String COMPONENT_NAME = "PMDProjectComponent";
+
+    public static final String TITLE = AbstractBundle.message(ResourceBundle.getBundle(BUNDLE), "handler.before.checkin.error.title");
 
     private final Project currentProject;
     private static final AtomicInteger numProjectsOpen = new AtomicInteger();
@@ -79,10 +83,11 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
     public void initComponent() {
         //Add custom rules as menu items if defined.
         updateCustomRulesMenu();
+
         ActionGroup actionGroup = registerActions("PMDPredefined");
         if (actionGroup != null)
             ((PreDefinedMenuGroup) actionGroup).setComponent(this);
-        registerActions("PMDCustom");
+        registerActions(TITLE);
     }
 
     private ActionGroup registerActions(String actionName) {
@@ -90,12 +95,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
         ActionGroup actionGroup = (ActionGroup) actionMgr.getAction(actionName);
         if (actionGroup != null) {
             for (AnAction act : actionGroup.getChildren(null)) {
-                String actName = "PMD" + act.getTemplatePresentation().getText();
-
-
-                System.out.println(actionName + "----------------");
-
-
+                String actName = act.getTemplatePresentation().getText();
                 if (actionMgr.getAction(actName) == null)
                     actionMgr.registerAction(actName, act);
             }
@@ -103,7 +103,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
         return actionGroup;
     }
 
-    private boolean hasDuplicateBareFileName(Iterable<String> paths)    {
+    private boolean hasDuplicateBareFileName(Iterable<String> paths) {
         boolean duplicate = false;
         List<String> fileNames = new ArrayList<>();
         for (String path : paths) {
@@ -124,42 +124,42 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
      * Now for > 1 projects open, merge the rule sets of shared actions (menu) and current project
      */
     void updateCustomRulesMenu() {
-            PMDCustom actionGroup = (PMDCustom) ActionManager.getInstance().getAction("PMDCustom");
-            if (numProjectsOpen.get() != 1) {
-                // merge actions from menu and from settings to not lose any when switching between projects
-                AnAction[] currentActions = actionGroup.getChildren(null);
-                Set<String> ruleSetPathsFromMenu = new LinkedHashSet<>();
-                for (AnAction action : currentActions) {
-                    if (action.getSynonyms().size() == 1) {
-                        String ruleSetPath = action.getSynonyms().get(0).get();
-                        ruleSetPathsFromMenu.add(ruleSetPath.trim());
-                    }
+        PMDCustom actionGroup = (PMDCustom) ActionManager.getInstance().getAction("PMDCustom");
+        if (numProjectsOpen.get() != 1) {
+            // merge actions from menu and from settings to not lose any when switching between projects
+            AnAction[] currentActions = actionGroup.getChildren(null);
+            Set<String> ruleSetPathsFromMenu = new LinkedHashSet<>();
+            for (AnAction action : currentActions) {
+                if (action.getSynonyms().size() == 1) {
+                    String ruleSetPath = action.getSynonyms().get(0).get();
+                    ruleSetPathsFromMenu.add(ruleSetPath.trim());
                 }
-                customRuleSetPaths.addAll(ruleSetPathsFromMenu);
-                // remove the ones just explicitly deleted in config
-                customRuleSetPaths.removeAll(deletedRuleSetPaths);
             }
-            List<AnAction> newActionList = new ArrayList<>();
-            boolean hasDuplicate = hasDuplicateBareFileName(customRuleSetPaths);
-            for (final String ruleSetPath : customRuleSetPaths) {
-                String ruleSetName = PMDResultCollector.getRuleSetName(ruleSetPath);
-                String extFileName = PMDUtil.getExtendedFileNameFromPath(ruleSetPath);
-                String bareFileName = PMDUtil.getBareFileNameFromPath(ruleSetPath);
-                String actionText = ruleSetName;
-                if (!ruleSetName.equals(bareFileName) || hasDuplicate) {
-                    actionText += " (" + extFileName + ")";
+            customRuleSetPaths.addAll(ruleSetPathsFromMenu);
+            // remove the ones just explicitly deleted in config
+            customRuleSetPaths.removeAll(deletedRuleSetPaths);
+        }
+        List<AnAction> newActionList = new ArrayList<>();
+        boolean hasDuplicate = hasDuplicateBareFileName(customRuleSetPaths);
+        for (final String ruleSetPath : customRuleSetPaths) {
+            String ruleSetName = PMDResultCollector.getRuleSetName(ruleSetPath);
+            String extFileName = PMDUtil.getExtendedFileNameFromPath(ruleSetPath);
+            String bareFileName = PMDUtil.getBareFileNameFromPath(ruleSetPath);
+            String actionText = ruleSetName;
+            if (!ruleSetName.equals(bareFileName) || hasDuplicate) {
+                actionText += " (" + extFileName + ")";
+            }
+            AnAction action = new AnAction(actionText) {
+                public void actionPerformed(AnActionEvent e) {
+                    PMDInvoker.getInstance().runPMD(e, ruleSetPath, true);
+                    setLastRunActionAndRules(e, ruleSetPath, true);
                 }
-                AnAction action = new AnAction(actionText) {
-                    public void actionPerformed(AnActionEvent e) {
-                        PMDInvoker.getInstance().runPMD(e, ruleSetPath, true);
-                        setLastRunActionAndRules(e, ruleSetPath, true);
-                    }
-                };
-                action.addSynonym(() -> ruleSetPath);
-                newActionList.add(action);
-            }
-            actionGroup.removeAll();
-            actionGroup.addAll(newActionList);
+            };
+            action.addSynonym(() -> ruleSetPath);
+            newActionList.add(action);
+        }
+        actionGroup.removeAll();
+        actionGroup.addAll(newActionList);
     }
 
     public void dispose() {
@@ -250,12 +250,14 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
     public AnActionEvent getLastRunAction() {
         return lastRunActionEvent;
     }
+
     /**
      * Set the last run action event and PMD rule(s). Multiple rules should be delimited by
      * PMDInvoker.RULE_DELIMITER.
-     * @param lastActionEvent the last run action event
+     *
+     * @param lastActionEvent     the last run action event
      * @param lastRunRuleSetPaths The last run rule set paths
-     * @param isCustom whether the last run rules are custom rules
+     * @param isCustom            whether the last run rules are custom rules
      */
     public void setLastRunActionAndRules(AnActionEvent lastActionEvent, String lastRunRuleSetPaths, boolean isCustom) {
         this.lastRunRuleSetPaths = lastRunRuleSetPaths;
@@ -280,6 +282,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
     public Set<String> getInEditorAnnotationRuleSets() {
         return inEditorAnnotationRuleSets;
     }
+
     public void setInEditorAnnotationRuleSets(List<String> inEditorAnnotationRules) {
         this.inEditorAnnotationRuleSets = new LinkedHashSet<>(inEditorAnnotationRules);
     }
@@ -294,6 +297,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
 
     /**
      * Return fields in a PersistentData object
+     *
      * @return
      */
     @NotNull
@@ -316,6 +320,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
 
     /**
      * load state into fields
+     *
      * @param state
      */
     public void loadState(PersistentData state) {
@@ -325,8 +330,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
         for (String key : state.getOptionKeyToValue().keySet()) {
             if (key.equals("Encoding")) { // replace unused 'Encoding' by 'Statistics URL'
                 optionToValue.put(ConfigOption.STATISTICS_URL, "");
-            }
-            else {
+            } else {
                 optionToValue.put(ConfigOption.fromKey(key), state.getOptionKeyToValue().get(key));
             }
         }
@@ -338,13 +342,11 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
         this.scanFilesBeforeCheckin = state.isScanFilesBeforeCheckin();
     }
 
-    public void skipTestSources(boolean skipTestSources)
-    {
+    public void skipTestSources(boolean skipTestSources) {
         this.skipTestSources = skipTestSources;
     }
 
-    public boolean isSkipTestSources()
-    {
+    public boolean isSkipTestSources() {
         return skipTestSources;
     }
 
@@ -355,7 +357,6 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
     public boolean isScanFilesBeforeCheckin() {
         return scanFilesBeforeCheckin;
     }
-
 
 
 }

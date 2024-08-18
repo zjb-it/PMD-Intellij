@@ -16,7 +16,7 @@ import java.util.*;
 
 public abstract class AbstractLuBanRule extends AbstractJavaRulechainRule {
 
-    public static final Set<String> ruleSetPath = Set.of("rulesets/java/luban-naming.xml");
+//    public static final Set<String> ruleSetPath = Set.of("rulesets/java/luban-naming.xml");
 
     public static final ResourceBundle MESSAGES_BUNDLE;
 

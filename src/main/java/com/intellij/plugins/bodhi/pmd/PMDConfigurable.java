@@ -30,7 +30,7 @@ public class PMDConfigurable implements Configurable {
 
     public JComponent createComponent() {
         if (form == null) {
-            form = new PMDConfigurationForm(project);
+            form = new PMDConfigurationForm(project, component);
         }
         return form.getRootPanel();
     }

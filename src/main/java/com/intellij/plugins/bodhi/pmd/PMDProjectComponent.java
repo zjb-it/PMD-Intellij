@@ -23,10 +23,14 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.intellij.plugins.bodhi.pmd.actions.PreDefinedMenuGroup.RULESETS_FILENAMES_KEY;
 import static com.intellij.plugins.bodhi.pmd.handlers.PMDCheckinHandler.BUNDLE;
 
 /**
@@ -62,13 +66,14 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
     private boolean lastRunRulesCustom;
     private AnActionEvent lastRunActionEvent;
     private Set<String> customRuleSetPaths = new LinkedHashSet<>(); // avoid duplicates, maintain order
+    private Set<String> defaultCustomRuleSetPaths = new LinkedHashSet<>(); // avoid duplicates, maintain order
     private Map<ConfigOption, String> optionToValue = new EnumMap<>(ConfigOption.class);
     private final ToolWindowManager toolWindowManager;
     private boolean skipTestSources;
     private boolean scanFilesBeforeCheckin;
     private Set<String> inEditorAnnotationRuleSets = new LinkedHashSet<>(); // avoid duplicates, maintain order
     private List<String> deletedRuleSetPaths = Collections.emptyList();
-
+    public static final String CUSTOM_RULESETS_PROPERTY_FILE = "rulesets/ruleset.properties";
     /**
      * Creates a PMD Project component based on the project given.
      *
@@ -124,6 +129,19 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
      * Now for > 1 projects open, merge the rule sets of shared actions (menu) and current project
      */
     void updateCustomRulesMenu() {
+
+        try {
+            Properties props = new Properties();
+            props.load(getRuleResourceStream());
+            String[] rulesetFilenames = props.getProperty(RULESETS_FILENAMES_KEY).split(PMDInvoker.RULE_DELIMITER);
+            for (String rulesetFilename : rulesetFilenames) {
+                customRuleSetPaths.add(rulesetFilename);
+                defaultCustomRuleSetPaths.add(rulesetFilename);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         PMDCustom actionGroup = (PMDCustom) ActionManager.getInstance().getAction("PMDCustom");
         if (numProjectsOpen.get() != 1) {
             // merge actions from menu and from settings to not lose any when switching between projects
@@ -146,7 +164,8 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
             String extFileName = PMDUtil.getExtendedFileNameFromPath(ruleSetPath);
             String bareFileName = PMDUtil.getBareFileNameFromPath(ruleSetPath);
             String actionText = ruleSetName;
-            if (!ruleSetName.equals(bareFileName) || hasDuplicate) {
+//            if (!ruleSetName.equals(bareFileName) || hasDuplicate) {
+            if (hasDuplicate) {
                 actionText += " (" + extFileName + ")";
             }
             AnAction action = new AnAction(actionText) {
@@ -165,7 +184,13 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
     public void dispose() {
         numProjectsOpen.decrementAndGet();
     }
-
+    private @Nullable InputStream getRuleResourceStream() {
+        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(CUSTOM_RULESETS_PROPERTY_FILE);
+        if (resourceAsStream == null) {
+            return Thread.currentThread().getContextClassLoader().getResourceAsStream(CUSTOM_RULESETS_PROPERTY_FILE);
+        }
+        return resourceAsStream;
+    }
     @NonNls
     @NotNull
     public String getComponentName() {
@@ -267,8 +292,12 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
 
     public List<String> getCustomRuleSetPaths() {
         LinkedHashSet<String> result = new LinkedHashSet<>(customRuleSetPaths);
-        result.addAll(AbstractLuBanRule.ruleSetPath);
+//        result.addAll(AbstractLuBanRule.ruleSetPath);
         return new ArrayList<>(result);
+    }
+
+    public Set<String> getDefaultCustomRuleSetPaths() {
+        return defaultCustomRuleSetPaths;
     }
 
     public void setCustomRuleSetPaths(List<String> customRuleSetPaths) {

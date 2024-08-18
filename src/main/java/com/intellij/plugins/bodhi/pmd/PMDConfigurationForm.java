@@ -57,7 +57,7 @@ public class PMDConfigurationForm {
     private static final List<String> columnNames = List.of("Option", "Value");
     private static final String STAT_URL_MSG_SUCCESS = "Connection success; will use Statistics URL to export anonymous usage statistics";
 
-    public PMDConfigurationForm(final Project project) {
+    public PMDConfigurationForm(final Project project,final PMDProjectComponent component) {
         this.project = project;
         //Get the action group defined
         DefaultActionGroup actionGroup = (DefaultActionGroup) ActionManager.getInstance().getAction("PMDSettingsEdit");
@@ -65,8 +65,8 @@ public class PMDConfigurationForm {
         actionGroup.removeAll();
         //Add the toolbar actions associated to this form to it
         actionGroup.add(new AddRuleSetAction("Add", "Add a custom ruleset", PlatformIcons.ADD_ICON));
-        actionGroup.add(new EditRuleSetAction("Edit", "Edit selected ruleset", PlatformIcons.EDIT));
-        actionGroup.add(new DeleteRuleSetAction("Delete", "Remove selected ruleset", PlatformIcons.DELETE_ICON));
+        actionGroup.add(new EditRuleSetAction("Edit", "Edit selected ruleset", PlatformIcons.EDIT, component));
+        actionGroup.add(new DeleteRuleSetAction("Delete", "Remove selected ruleset", PlatformIcons.DELETE_ICON, component));
         ActionToolbar toolbar = ActionManager.getInstance().createActionToolbar("modify actions", actionGroup, true);
         toolbar.setTargetComponent(toolbar.getComponent()); // prevent warning
         toolbar.getComponent().setVisible(true);
@@ -96,7 +96,20 @@ public class PMDConfigurationForm {
      */
     public void setDataOnUI(PMDProjectComponent dataProjComp) {
         List<String> customRuleSetPaths = dataProjComp.getCustomRuleSetPaths();
-        ruleSetPathJList.setModel(new RuleSetListModel(customRuleSetPaths));
+        Set<String> defaultCustomRuleSetPaths = dataProjComp.getDefaultCustomRuleSetPaths();
+        RuleSetListModel ruleSetListModel = new RuleSetListModel(customRuleSetPaths);
+        ruleSetPathJList.setCellRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (defaultCustomRuleSetPaths.contains(value)) {
+                    component.setForeground(Color.LIGHT_GRAY);
+                }
+                return component;
+            }
+        });
+
+        ruleSetPathJList.setModel(ruleSetListModel);
         if (dataProjComp.getOptionToValue().isEmpty()) {
             final int numOptions = ConfigOption.size();
             String[][] optionDescsDefaultValues = new String[numOptions][2];
@@ -245,8 +258,10 @@ public class PMDConfigurationForm {
      * Inner class for 'Edit' action
      */
     private class EditRuleSetAction extends AnEDTAction {
-        public EditRuleSetAction(String text, String description, Icon icon) {
+        private PMDProjectComponent component;
+        public EditRuleSetAction(String text, String description, Icon icon, PMDProjectComponent component) {
             super(text, description, icon);
+            this.component = component;
             registerCustomShortcutSet(CommonShortcuts.ALT_ENTER, rootPanel);
         }
 
@@ -257,7 +272,11 @@ public class PMDConfigurationForm {
 
         public void update(@NotNull AnActionEvent e) {
             super.update(e);
-            e.getPresentation().setEnabled(!ruleSetPathJList.getSelectionModel().isSelectionEmpty());
+            if (component.getDefaultCustomRuleSetPaths().contains(ruleSetPathJList.getSelectedValue())) {
+                e.getPresentation().setEnabled(false);
+            }else{
+                e.getPresentation().setEnabled(!ruleSetPathJList.getSelectionModel().isSelectionEmpty());
+            }
         }
 
     }
@@ -266,8 +285,10 @@ public class PMDConfigurationForm {
      * Inner class for 'Delete' action
      */
     private class DeleteRuleSetAction extends AnEDTAction {
-        public DeleteRuleSetAction(String text, String description, Icon icon) {
+        private PMDProjectComponent component;
+        public DeleteRuleSetAction(String text, String description, Icon icon, PMDProjectComponent component) {
             super(text, description, icon);
+            this.component = component;
             registerCustomShortcutSet(CommonShortcuts.getDelete(), rootPanel);
         }
 
@@ -278,7 +299,7 @@ public class PMDConfigurationForm {
                 ((RuleSetListModel) ruleSetPathJList.getModel()).remove(index);
                 ruleSetPathJList.setSelectedIndex(index);
                 deletedRuleSetPaths.add(toRemove);
-
+//todo
                 ((RuleSetListModel) inEditorAnnotationRuleSets.getModel()).remove(toRemove);
             }
             ruleSetPathJList.repaint();
@@ -286,7 +307,11 @@ public class PMDConfigurationForm {
 
         public void update(@NotNull AnActionEvent e) {
             super.update(e);
-            e.getPresentation().setEnabled(ruleSetPathJList.getSelectedIndex() != -1);
+            if (component.getDefaultCustomRuleSetPaths().contains(ruleSetPathJList.getSelectedValue())) {
+                e.getPresentation().setEnabled(false);
+            }else{
+                e.getPresentation().setEnabled(ruleSetPathJList.getSelectedIndex() != -1);
+            }
         }
     }
 

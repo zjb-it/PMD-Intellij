@@ -42,6 +42,7 @@
             implementationClass="com.intellij.plugins.bodhi.pmd.annotator.PMDExternalAnnotator"/>
 <!--    <annotator language="JAVA" implementationClass="com.intellij.plugins.bodhi.pmd.annotator.SimpleAnnotator"/>-->
 
+      <postStartupActivity implementation="com.intellij.plugins.bodhi.pmd.StartupListener"/>
   </extensions>
   <applicationListeners>
     <listener

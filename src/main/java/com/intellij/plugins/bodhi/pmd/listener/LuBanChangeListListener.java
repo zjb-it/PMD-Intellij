@@ -40,7 +40,7 @@ public class LuBanChangeListListener implements ChangeListListener {
         if (list instanceof LocalChangeListImpl localChangeList) {
         }
 
-        Change change = new ArrayList<>(list.getChanges()).get(1);
+//        Change change = new ArrayList<>(list.getChanges()).get(1);
 
 //        try {
 //            String content = change.getBeforeRevision().getContent();

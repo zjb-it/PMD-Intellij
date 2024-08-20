@@ -76,6 +76,8 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
     private List<String> deletedRuleSetPaths = Collections.emptyList();
     public static final String CUSTOM_RULESETS_PROPERTY_FILE = "rulesets/ruleset.properties";
 
+    private boolean autoMerge ;
+
     private Integer autoPullInterval;
     /**
      * Creates a PMD Project component based on the project given.
@@ -348,6 +350,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
             persistentData.getInEditorAnnotationRules().add(item);
         }
         persistentData.setAutoPullInterval(this.autoPullInterval);
+        persistentData.setAutoMerge(this.autoMerge);
         return persistentData;
     }
 
@@ -373,6 +376,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
 
         this.skipTestSources = state.isSkipTestSources();
         this.scanFilesBeforeCheckin = state.isScanFilesBeforeCheckin();
+        this.autoMerge = state.isAutoMerge();
     }
 
     public void skipTestSources(boolean skipTestSources) {
@@ -400,5 +404,13 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
             autoPullInterval = "60";
         }
         this.autoPullInterval = Integer.parseInt(autoPullInterval);
+    }
+
+    public boolean isAutoMerge() {
+        return autoMerge;
+    }
+
+    public void setAutoMerge(boolean autoMerge) {
+        this.autoMerge = autoMerge;
     }
 }

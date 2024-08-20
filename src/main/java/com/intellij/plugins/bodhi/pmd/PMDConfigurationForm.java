@@ -16,14 +16,12 @@ import com.intellij.util.PlatformIcons;
 import net.sourceforge.pmd.lang.Language;
 import net.sourceforge.pmd.lang.LanguageRegistry;
 import net.sourceforge.pmd.lang.LanguageVersion;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,6 +53,7 @@ public class PMDConfigurationForm {
     private JList<String> inEditorAnnotationRuleSets;
     private JTextField autoPullInterval;
     private JPanel gitPanel;
+    private JCheckBox autoMerge;
     private final List<String> deletedRuleSetPaths = new ArrayList<>();
     private boolean isModified;
     private final Project project;
@@ -99,6 +98,7 @@ public class PMDConfigurationForm {
         inEditorAnnotationRuleSets.setModel(new RuleSetListModel(new ArrayList<>()));
         inEditorAnnotationRuleSets.getSelectionModel().addListSelectionListener(new SelectionChangeListener());
         skipTestsCheckBox.addChangeListener(new CheckBoxChangeListener());
+        autoMerge.addChangeListener(new CheckBoxChangeListener());
 
         validKnownCustomRules = PMDUtil.getValidKnownCustomRules();
     }
@@ -147,6 +147,7 @@ public class PMDConfigurationForm {
         }
         skipTestsCheckBox.setSelected(dataProjComp.isSkipTestSources());
         autoPullInterval.setText(dataProjComp.getAutoPullInterval() + "");
+        autoMerge.setSelected(dataProjComp.isAutoMerge());
 
         Properties props = new Properties();
         try {
@@ -186,6 +187,7 @@ public class PMDConfigurationForm {
         dataProjComp.skipTestSources(skipTestsCheckBox.isSelected());
         dataProjComp.setAutoPullInterval(autoPullInterval.getText());
         dataProjComp.setInEditorAnnotationRuleSets(inEditorAnnotationRuleSets.getSelectedValuesList());
+        dataProjComp.setAutoMerge(this.autoMerge.isSelected());
 
         isModified = false;
     }

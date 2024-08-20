@@ -13,6 +13,7 @@ public class PersistentData {
     private boolean scanFilesBeforeCheckin;
     private List<String> inEditorAnnotationRules;
     private Integer autoPullInterval = 60;
+    private boolean autoMerge = true;
 
 
     public PersistentData() {
@@ -66,5 +67,13 @@ public class PersistentData {
 
     public void setAutoPullInterval(Integer autoPullInterval) {
         this.autoPullInterval = autoPullInterval;
+    }
+
+    public boolean isAutoMerge() {
+        return autoMerge;
+    }
+
+    public void setAutoMerge(boolean autoMerge) {
+        this.autoMerge = autoMerge;
     }
 }

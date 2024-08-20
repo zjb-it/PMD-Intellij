@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static com.intellij.plugins.bodhi.pmd.actions.PreDefinedMenuGroup.RULESETS_FILENAMES_KEY;
 import static com.intellij.plugins.bodhi.pmd.handlers.PMDCheckinHandler.BUNDLE;
@@ -163,6 +164,14 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
             customRuleSetPaths.removeAll(deletedRuleSetPaths);
         }
         List<AnAction> newActionList = new ArrayList<>();
+
+        AnAction allAction = new AnAction("All") {
+            public void actionPerformed(AnActionEvent e) {
+                String rulSetPaths = customRuleSetPaths.stream().collect(Collectors.joining(PMDInvoker.RULE_DELIMITER));
+                PMDInvoker.getInstance().runPMD(e, rulSetPaths, false);
+            }
+        };
+        newActionList.add(allAction);
         boolean hasDuplicate = hasDuplicateBareFileName(customRuleSetPaths);
         for (final String ruleSetPath : customRuleSetPaths) {
             String ruleSetName = PMDResultCollector.getRuleSetName(ruleSetPath);

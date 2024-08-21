@@ -1,5 +1,6 @@
 package com.intellij.plugins.bodhi.pmd.handlers;
 
+import com.google.common.collect.Lists;
 import com.intellij.AbstractBundle;
 import com.intellij.CommonBundle;
 import com.intellij.openapi.project.Project;
@@ -226,7 +227,7 @@ public class PMDCheckinHandler extends CheckinHandler {
     private ReturnResult processScanResults(List<PMDRuleSetNode> ruleSetResultNodes, Project project) {
         int violations = toViolations(ruleSetResultNodes);
         if (violations > 0) {
-            int answer = promptUser(project, violations);
+            int answer = promptUser(project, violations, ruleSetResultNodes);
 //            todo 如果有violation不能提交，在这处理
             if (answer == Messages.OK) {
                 showToolWindow(ruleSetResultNodes, project);
@@ -247,13 +248,18 @@ public class PMDCheckinHandler extends CheckinHandler {
         return violations;
     }
 
-    private int promptUser(Project project, int violations) {
-        String[] buttons = new String[]{message("handler.before.checkin.error.review"),
-                checkinProjectPanel.getCommitActionName(),
-                CommonBundle.getCancelButtonText()};
-
-        return Messages.showDialog(project, message("handler.before.checkin.error.text", violations),
-                message("handler.before.checkin.error.title"), buttons, 0, UIUtil.getWarningIcon());
+    private int promptUser(Project project, int violations, List<PMDRuleSetNode> ruleSetResultNodes) {
+        List<String> buttons = Lists.newArrayList(message("handler.before.checkin.error.review"), CommonBundle.getCancelButtonText());
+        int mustRuleCount = ruleSetResultNodes.stream().mapToInt(node -> node.getSevViolationCount(Severity.BLOCKER)).sum();
+        String message = "";
+        if (mustRuleCount < 1) {
+            message = message("handler.before.checkin.error.text", violations);
+            buttons.add(1, checkinProjectPanel.getCommitActionName());
+        } else {
+            message = message("handler.before.checkin.error.not.commit.text", mustRuleCount);
+        }
+        return Messages.showDialog(project, message,
+                message("handler.before.checkin.error.title"), buttons.toArray(new String[0]), 0, UIUtil.getWarningIcon());
     }
 
     private void showToolWindow(List<PMDRuleSetNode> ruleSetResultNodes, Project project) {

@@ -49,7 +49,7 @@ public class LubanPrePushHandler implements PrePushHandler {
 
     @Override
     public @NotNull @Nls(capitalization = Nls.Capitalization.Title) String getPresentableName() {
-        return "LubanPrePushHandler";
+        return "校验通过才能push, 编译校验中... ";
     }
 
 

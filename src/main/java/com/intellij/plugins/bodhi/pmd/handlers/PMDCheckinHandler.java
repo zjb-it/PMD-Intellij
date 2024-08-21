@@ -60,6 +60,7 @@ public class PMDCheckinHandler extends CheckinHandler {
     @Override
     public RefreshableOnComponent getBeforeCheckinConfigurationPanel() {
         final JCheckBox checkBox = new JCheckBox(message("handler.before.checkin.checkbox"));
+        checkBox.setEnabled(false);
 
         Project project = checkinProjectPanel.getProject();
         final PMDProjectComponent projectComponent = project.getComponent(PMDProjectComponent.class);

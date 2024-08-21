@@ -27,7 +27,7 @@ public class PreDefinedMenuGroup extends ActionGroup {
     private static String allRules = "";
 
     //All the children of this group
-    private DefaultActionGroup children = new DefaultActionGroup("Pre Defined", true);
+    private DefaultActionGroup children = new DefaultActionGroup("PMD", true);
 
     private PMDProjectComponent component;
 

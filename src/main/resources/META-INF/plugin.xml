@@ -15,7 +15,7 @@
   <depends>com.intellij.java</depends>
   <actions>
     <!-- The Main menu item which includes predefined and custom rulesets -->
-    <group id="PMDMenuGroup" text="Run PMD" popup="true"
+    <group id="PMDMenuGroup" text="鲁班北研代码规范" popup="true"
            class="com.intellij.plugins.bodhi.pmd.actions.PMDMenuGroup">
       <add-to-group group-id="ToolsMenu" anchor="last"/>
       <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
@@ -23,7 +23,7 @@
       <add-to-group group-id="EditorPopupMenu" anchor="last"/>
 
       <action class="com.intellij.plugins.bodhi.pmd.actions.PreDefinedMenuGroup" id="PMDPredefined"
-              popup="true" text="Pre Defined"/>
+              popup="true" text="PMD"/>
       <action id="PMDCustom" class="com.intellij.plugins.bodhi.pmd.actions.PMDCustom"
               popup="true" text="Custom Rules"/>
     </group>

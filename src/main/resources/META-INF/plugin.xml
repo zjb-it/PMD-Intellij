@@ -13,6 +13,7 @@
 
   <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.java</depends>
+<!--  <depends>org.jetbrains.idea.maven</depends>-->
   <actions>
     <!-- The Main menu item which includes predefined and custom rulesets -->
     <group id="PMDMenuGroup" text="鲁班北研代码规范" popup="true"
@@ -36,6 +37,8 @@
     <projectConfigurable id="PMD" displayName="PMD" instance="com.intellij.plugins.bodhi.pmd.PMDConfigurable"/>
     <checkinHandlerFactory id="PMDCheckinHandlerFactory"
                            implementation="com.intellij.plugins.bodhi.pmd.handlers.PMDCheckinHandlerFactory"/>
+    <prePushHandler id="LubanPrePushHandler"
+            implementation="com.intellij.plugins.bodhi.pmd.listener.LubanPrePushHandler"/>
 
     <externalAnnotator
             language="JAVA"

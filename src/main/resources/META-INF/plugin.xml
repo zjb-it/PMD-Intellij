@@ -1,7 +1,7 @@
 <idea-plugin>
 
-  <name>PMD</name>
-  <id>PMDPlugin</id>
+  <name>LubanBeiYanCodeGuidelines</name>
+  <id>LubanPMDPlugin</id>
 
   <vendor>Amit Dev</vendor>
 

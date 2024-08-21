@@ -15,7 +15,7 @@
             （一）【强制】在 long 或者 Long 赋值时，数值后使用大写的 L，不能是小写的 l，小写容易跟数字 混淆，造成误解。
             说明：Long a = 2l; 写的是数字的 21，还是 Long 型的 2。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
         </example>
     </rule>
@@ -28,7 +28,7 @@
         <description>
             （二）【强制】左小括号和右边相邻字符之间不出现空格；右小括号和左边相邻字符之间也不出现空 格；而左大括号前需要加空格。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             <![CDATA[
             反例：if (空格 a == b 空格)

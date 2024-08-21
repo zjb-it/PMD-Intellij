@@ -11,7 +11,7 @@
           class="net.sourceforge.pmd.lang.java.rule.multithreading.DoubleCheckedLockingRule">
         <description>
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             <![CDATA[
            public class Foo {
@@ -94,7 +94,7 @@
         <description>
             （三）【强制】线程资源必须通过线程池提供，不允许在应用中自行显式创建线程。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -115,7 +115,7 @@
             说明二：如果 lock 方法在 try 代码块之内，可能由于其它方法抛出异常，导致在 finally 代码块中，unlock 对未加锁的对象解锁，它会调用 AQS 的 tryRelease 方法（取决于具体实现类），抛出 IllegalMonitorStateException 异常。
             说明三：在 Lock 对象的 lock 方法实现中可能抛出 unchecked 异常，产生的后果与说明二相同。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -167,7 +167,7 @@
         <description>
             说明：Lock 对象的 unlock 方法在执行时，它会调用 AQS 的 tryRelease 方法（取决于具体实现类），如果当前线程不持有锁，则抛出 IllegalMonitorStateException 异常。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>

@@ -13,7 +13,7 @@
         <description>
             【强制】Object 的 equals 方法容易抛空指针异常，应使用常量或确定有值的对象来调用 equals
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -41,7 +41,7 @@
             （四）【强制】禁止使用构造方法 BigDecimal(double)的方式把 double 值转化为 BigDecimal 对象。
             说明：BigDecimal(double)存在精度损失风险，在精确计算或值比较的场景中可能会导致业务逻辑异常。如：BigDecimal g = new BigDecimal(0.1f); 实际的存储值为：0.10000000149
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             正例：优先推荐入参为 String 的构造方法，或使用 BigDecimal 的 valueOf 方法，此方法内部其实执行了Double 的 toString，而 Double 的 toString 按 double 的实际能表达的精度对尾数进行了截断。
             BigDecimal recommend1 = new BigDecimal("0.1");
@@ -57,7 +57,7 @@
             （五）【强制】不允许在程序任何地方中使用：java.sql.Date   java.sql.Time  java.sql.Timestamp。
             说明：第 1 个不记录时间，getHours()抛出异常；第 2 个不记录日期，getYear()抛出异常；第 3 个在构造方法 super((time/1000)*1000)，fastTime 和 nanos 分开存储秒和纳秒信息
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             反例： java.util.Date.after(Date)进行时间比较时，当入参是 java.sql.Timestamp 时，会触发 JDK BUG(JDK9 已修复)，可能导致比较时的意外结果
         </example>
@@ -70,7 +70,7 @@
         <description>
             （六）【强制】避免通过一个类的对象引用访问此类的静态变量或静态方法无谓增加编译器解析成本，直接用类名来访问即可。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
         </example>
     </rule>
@@ -92,9 +92,10 @@
           message="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.AvoidIsGetMethodCoexistRule.violation.msg"
           class="com.intellij.plugins.bodhi.pmd.lang.java.rule.oop.AvoidIsGetMethodCoexistRule">
         <description>
-            框架在调用属性 xxx 的提取方法时，并不能确定哪个方法一定是被优先调用到，神坑之一。
+            （十四）【强制】禁止在 POJO 类中，同时存在对应属性 xxx 的 isXxx()和 getXxx()方法。
+            说明：框架在调用属性 xxx 的提取方法时，并不能确定哪个方法一定是被优先调用到，神坑之一。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
         </example>
     </rule>

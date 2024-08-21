@@ -14,7 +14,7 @@
         <description>
             （一）【强制】注释的双斜线与注释内容之间有且仅有一个空格
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             <![CDATA[
             正例：
@@ -31,7 +31,7 @@
         <description>
             （二）【强制】类、类属性、类方法的注释必须使用Javadoc 规范使用/**内容*/格式，不得使用// xxx 方式。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             <![CDATA[
             正例：

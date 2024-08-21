@@ -13,7 +13,7 @@
         <description>
             【强制】类名使用 UpperCamelCase 风格
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             <![CDATA[
  （一）【强制】类名使用 UpperCamelCase 风格
@@ -38,7 +38,7 @@
             （八）【建议】常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长。
             （十）【建议】POJO 类中的任何布尔类型的变量，都不要加 is 前缀，否则部分框架解析会引起序列化错误。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             <![CDATA[
 （三）【强制】类名使用 UpperCamelCase 风格
@@ -62,7 +62,7 @@
             （三）【强制】方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风格。
             （四）【强制】代码中的命名均不能以下划线或美元符号开始，也不能以下划线或美元符号结束。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             <![CDATA[
             （三）【强制】方法使用 UpperCamelCase 风格
@@ -116,7 +116,7 @@
             （四）【强制】代码中的命名均不能以下划线或美元符号开始，也不能以下划线或美元符号结束。
             （六）【强制】类型与中括号紧挨相连来表示数组
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             <![CDATA[
             正例：定义整形数组 int[] arrayDemo;
@@ -135,7 +135,7 @@
         <description>
             （十三）【强制】包名统一使用小写，点分隔符之间有且仅有一个自然语义的英语单词。包名统一使用单数形式，但是类名如果有复数含义，类名可以使用复数形式。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <example>
             正例：应用工具类包名为 com.alibaba.ei.kunlun.aap.util、类名为 MessageUtils（此规则参考 spring 的框架结构）
         </example>

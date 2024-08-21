@@ -12,7 +12,7 @@
         <description>
 
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -33,7 +33,7 @@
         <description>
             使用log.error()
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -52,7 +52,7 @@
         <description>
             需要log.error()
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>

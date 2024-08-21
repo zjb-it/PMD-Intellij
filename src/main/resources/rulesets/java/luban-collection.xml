@@ -9,9 +9,9 @@
           language="java"
           class="com.intellij.plugins.bodhi.pmd.lang.java.rule.collection.EqualsHashCodeRule">
         <description>
-            1.只要重写 equals，就必须重写 hashCode；
+            1.强制 只要重写 equals，就必须重写 hashCode；
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
     </rule>
 
     <rule name="MapSetKeyMustEqualsHashCodeRule"
@@ -32,7 +32,7 @@
         <description>
             （二）【强制】判断所有集合内部的元素是否为空，使用 isEmpty()方法，而不是 size()==0 的方式
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -64,7 +64,7 @@
         <description>
             （三）【强制】在使用 java.util.stream.Collectors 类的 toMap()方法转为 Map 集合时，一定要使用含有参数类型为 BinaryOperator，参数名为 mergeFunction 的方法，否则当出现相同 key值时会抛IllegalStateException 异常
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -98,7 +98,7 @@
         <description>
             【强制】在 subList 场景高度注意对父集合元素的增加或删除均会导致子列表的遍历、增加、删除产生 ConcurrentModificationException 异常。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -140,7 +140,7 @@
         <description>
             （九）【强制】使用集合转数组的方法必须使用集合的 toArray(T[] array)，传入的是类型完全一致、长度为 0 的空数组。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -175,7 +175,7 @@
         <description>
             说明：在 ArrayList#addAll 方法的第一行代码即 Object[] a = c.toArray(); 其中 c 为输入集合参数，如果为 null，则直接抛出异常。
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -201,7 +201,7 @@ or ./VariableAccess/@Name =..//parent::Block/parent::IfStatement/MethodCall[@Met
         <description>
             （十一）【强制】使用工具类 Arrays.asList()把数组转换成集合时，不能使用其修改集合相关的方法，它的 add/remove/clear 方法会抛出 UnsupportedOperationException 异常
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -237,7 +237,7 @@ or ./VariableAccess/@Name =..//parent::Block/parent::IfStatement/MethodCall[@Met
         <description>
             需要指定泛型
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>
@@ -270,7 +270,7 @@ or ./VariableAccess/@Name =..//parent::Block/parent::IfStatement/MethodCall[@Met
         <description>
             For循环中严禁remove,会报异常 ConcurrentModificationException
         </description>
-        <priority>3</priority>
+        <priority>1</priority>
         <properties>
             <property name="xpath">
                 <value>

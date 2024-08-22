@@ -29,7 +29,11 @@ public class LubanPrePushHandler implements PrePushHandler {
         Set<VirtualFile> virtualFiles = pushDetails.stream().flatMap(detail ->
                 detail.getCommits()
                         .stream()
-                        .flatMap(commit -> commit.getChanges().stream().map(Change::getVirtualFile))
+                        .flatMap(commit -> commit.getChanges()
+                                .stream()
+                                .filter(change -> change.getType() != Change.Type.DELETED)
+                                .map(Change::getVirtualFile)
+                                .filter(VirtualFile::isValid))
         ).collect(Collectors.toSet());
         VirtualFile[] array = virtualFiles.toArray(new VirtualFile[0]);
 

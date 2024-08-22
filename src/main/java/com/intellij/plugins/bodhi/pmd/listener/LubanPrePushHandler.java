@@ -2,6 +2,8 @@ package com.intellij.plugins.bodhi.pmd.listener;
 
 import com.intellij.dvcs.push.PrePushHandler;
 import com.intellij.dvcs.push.PushInfo;
+import com.intellij.ide.highlighter.JavaFileType;
+import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.compiler.CompilerManager;
 import com.intellij.openapi.progress.ProgressIndicator;
@@ -33,7 +35,7 @@ public class LubanPrePushHandler implements PrePushHandler {
                                 .stream()
                                 .filter(change -> change.getType() != Change.Type.DELETED)
                                 .map(Change::getVirtualFile)
-                                .filter(VirtualFile::isValid))
+                                .filter(file -> file.isValid() && file.getFileType() == JavaFileType.INSTANCE))
         ).collect(Collectors.toSet());
         VirtualFile[] array = virtualFiles.toArray(new VirtualFile[0]);
 

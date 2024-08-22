@@ -410,7 +410,7 @@ public class PMDProjectComponent implements ProjectComponent, PersistentStateCom
 
     public void setAutoPullInterval(String autoPullInterval) {
         if (StringUtils.isBlank(autoPullInterval)) {
-            autoPullInterval = "60";
+            autoPullInterval = "12";
         }
         this.autoPullInterval = Integer.parseInt(autoPullInterval);
     }

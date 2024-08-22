@@ -53,7 +53,7 @@
                       <component id="4bb05" class="javax.swing.JTextField" binding="autoPullInterval">
                         <constraints border-constraint="West"/>
                         <properties>
-                          <text value="60"/>
+                          <text value="12"/>
                         </properties>
                       </component>
                       <component id="b96f" class="javax.swing.JLabel">

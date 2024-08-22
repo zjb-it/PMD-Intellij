@@ -12,7 +12,7 @@ public class PersistentData {
     private boolean skipTestSources = DEFAULT_SKIP_TEST_SRC;
     private boolean scanFilesBeforeCheckin;
     private List<String> inEditorAnnotationRules;
-    private Integer autoPullInterval = 60;
+    private Integer autoPullInterval = 12;
     private boolean autoMerge = true;
 
 

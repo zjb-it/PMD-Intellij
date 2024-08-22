@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class PMDConfigurable implements Configurable {
     private PMDConfigurationForm form;
@@ -19,7 +20,7 @@ public class PMDConfigurable implements Configurable {
     }
 
     public String getDisplayName() {
-        return "PMD";
+        return PMDProjectComponent.TITLE;
     }
 
     @Nullable
@@ -40,10 +41,12 @@ public class PMDConfigurable implements Configurable {
     }
 
     public void apply() throws ConfigurationException {
-        if (form != null) {
+        if (form != null && component != null) {
             form.getDataFromUi(component);
         }
-        component.updateCustomRulesMenu();
+        if (Objects.nonNull(component)) {
+            component.updateCustomRulesMenu();
+        }
     }
 
     public void reset() {

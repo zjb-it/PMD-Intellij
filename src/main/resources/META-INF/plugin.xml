@@ -3,7 +3,8 @@
   <name>LubanBeiYanCodeGuidelines</name>
   <id>LubanPMDPlugin</id>
 
-  <vendor>Amit Dev</vendor>
+
+  <vendor>赵静波</vendor>
 
   <project-components>
     <component>
@@ -34,7 +35,7 @@
 
   </actions>
   <extensions defaultExtensionNs="com.intellij">
-    <projectConfigurable id="PMD" displayName="PMD" instance="com.intellij.plugins.bodhi.pmd.PMDConfigurable"/>
+    <projectConfigurable id="PMD" displayName="鲁班北研代码规范" instance="com.intellij.plugins.bodhi.pmd.PMDConfigurable"/>
     <checkinHandlerFactory id="PMDCheckinHandlerFactory"
                            implementation="com.intellij.plugins.bodhi.pmd.handlers.PMDCheckinHandlerFactory"/>
     <prePushHandler id="LubanPrePushHandler"
